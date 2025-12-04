@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Metas de Ahorro{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-bullseye text-yellow-500"></i> Metas de Ahorro
+        </h1>
+        <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
+            <i class="fas fa-plus mr-2"></i> Agregar Meta
+        </button>
+    </div>
+
+    <!-- Goals Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Metas Activas</p>
+            <h2 id="active-goals" class="text-3xl font-bold text-primary mt-2">0</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Total Ahorrado</p>
+            <h2 id="total-saved" class="text-3xl font-bold text-green-600 mt-2">$0.00</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Total Objetivo</p>
+            <h2 id="total-target" class="text-3xl font-bold text-gray-800 mt-2">$0.00</h2>
+        </div>
+    </div>
+
+    <!-- Goals List -->
+    <div id="goals-container" class="space-y-4">
+        <!-- Goals will be loaded here -->
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div id="goal-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Meta</h2>
+        <form id="goal-form" class="space-y-4">
+            <input type="hidden" id="goal-id">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Nombre de la meta *</label>
+                <input type="text" id="goal-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Vacaciones, Auto nuevo">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Monto objetivo *</label>
+                <input type="number" id="goal-target" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Monto ahorrado actual</label>
+                <input type="number" id="goal-current" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00" value="0">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Fecha objetivo</label>
+                <input type="date" id="goal-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Descripción</label>
+                <textarea id="goal-description" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Descripción opcional"></textarea>
+            </div>
+            <div class="flex space-x-3 pt-4">
+                <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    <i class="fas fa-save mr-2"></i> Guardar
+                </button>
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let goals = [];
+
+    async function loadGoals() {
+        try {
+            const res = await fetch('/api/goals');
+            goals = await res.json();
+            renderGoals();
+        } catch (error) {
+            console.error('Error loading goals:', error);
+            showToast('Error al cargar las metas', 'error');
+        }
+    }
+
+    function renderGoals() {
+        const container = document.getElementById('goals-container');
+        const activeGoals = goals.filter(g => g.progress < 100).length;
+        const totalSaved = goals.reduce((sum, g) => sum + (g.current_amount || 0), 0);
+        const totalTarget = goals.reduce((sum, g) => sum + (g.target_amount || 0), 0);
+
+        document.getElementById('active-goals').textContent = activeGoals;
+        document.getElementById('total-saved').textContent = formatCurrency(totalSaved);
+        document.getElementById('total-target').textContent = formatCurrency(totalTarget);
+
+        if (goals.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-12 bg-white rounded-lg shadow">
+                    <i class="fas fa-bullseye text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 text-lg">No hay metas de ahorro</p>
+                    <p class="text-gray-400">Agrega tu primera meta de ahorro</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = goals.map(goal => {
+            const isCompleted = goal.progress >= 100;
+            const daysRemaining = goal.target_date ? Math.ceil((new Date(goal.target_date) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+
+            return `
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition ${isCompleted ? 'border-2 border-green-500' : ''}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-xl font-bold text-gray-800">${goal.name}</h3>
+                                ${isCompleted ? '<span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full"><i class="fas fa-check mr-1"></i>Completada</span>' : ''}
+                            </div>
+                            ${goal.description ? `<p class="text-gray-500 text-sm mt-1">${goal.description}</p>` : ''}
+                            ${goal.target_date ? `
+                                <p class="text-gray-400 text-sm mt-1">
+                                    <i class="fas fa-calendar mr-1"></i>
+                                    ${new Date(goal.target_date).toLocaleDateString('es-PE')}
+                                    ${daysRemaining !== null ? `(${daysRemaining > 0 ? daysRemaining + ' días' : 'Vencida'})` : ''}
+                                </p>
+                            ` : ''}
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editGoal('${goal.id}')" class="text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteGoal('${goal.id}')" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-2xl font-bold text-gray-800">${formatCurrency(goal.current_amount || 0)}</span>
+                            <span class="text-gray-600">de ${formatCurrency(goal.target_amount || 0)}</span>
+                        </div>
+
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div class="h-4 rounded-full flex items-center justify-end pr-2 transition-all ${isCompleted ? 'bg-green-500' : 'bg-gradient-to-r from-yellow-400 to-yellow-500'}" style="width: ${Math.min(goal.progress, 100)}%">
+                                <span class="text-xs font-bold text-white">${goal.progress.toFixed(1)}%</span>
+                            </div>
+                        </div>
+
+                        ${!isCompleted && goal.target_amount > goal.current_amount ? `
+                            <p class="text-sm text-gray-500 mt-2">
+                                Falta: ${formatCurrency(goal.target_amount - goal.current_amount)}
+                            </p>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openAddModal() {
+        document.getElementById('modal-title').textContent = 'Agregar Meta';
+        document.getElementById('goal-form').reset();
+        document.getElementById('goal-id').value = '';
+        document.getElementById('goal-current').value = '0';
+        document.getElementById('goal-modal').classList.remove('hidden');
+        document.getElementById('goal-modal').classList.add('flex');
+    }
+
+    function editGoal(id) {
+        const goal = goals.find(g => g.id === id);
+        if (!goal) return;
+
+        document.getElementById('modal-title').textContent = 'Editar Meta';
+        document.getElementById('goal-id').value = id;
+        document.getElementById('goal-name').value = goal.name;
+        document.getElementById('goal-target').value = goal.target_amount || 0;
+        document.getElementById('goal-current').value = goal.current_amount || 0;
+        document.getElementById('goal-date').value = goal.target_date || '';
+        document.getElementById('goal-description').value = goal.description || '';
+
+        document.getElementById('goal-modal').classList.remove('hidden');
+        document.getElementById('goal-modal').classList.add('flex');
+    }
+
+    function closeModal() {
+        document.getElementById('goal-modal').classList.add('hidden');
+        document.getElementById('goal-modal').classList.remove('flex');
+    }
+
+    async function deleteGoal(id) {
+        if (!confirm('¿Estás seguro de eliminar esta meta?')) return;
+
+        try {
+            const res = await fetch(`/api/goals/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast('Meta eliminada exitosamente');
+                loadGoals();
+            }
+        } catch (error) {
+            console.error('Error deleting goal:', error);
+            showToast('Error al eliminar la meta', 'error');
+        }
+    }
+
+    document.getElementById('goal-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('goal-id').value;
+        const data = {
+            name: document.getElementById('goal-name').value,
+            target_amount: parseFloat(document.getElementById('goal-target').value),
+            current_amount: parseFloat(document.getElementById('goal-current').value) || 0,
+            target_date: document.getElementById('goal-date').value || null,
+            description: document.getElementById('goal-description').value
+        };
+
+        try {
+            let res;
+            if (id) {
+                res = await fetch(`/api/goals/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } else {
+                res = await fetch('/api/goals', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            }
+
+            if (res.ok) {
+                showToast(id ? 'Meta actualizada' : 'Meta creada');
+                closeModal();
+                loadGoals();
+            }
+        } catch (error) {
+            console.error('Error saving goal:', error);
+            showToast('Error al guardar la meta', 'error');
+        }
+    });
+
+    // Load goals on page load
+    loadGoals();
+</script>
+{% endblock %}
+

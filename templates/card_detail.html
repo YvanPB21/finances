@@ -1,0 +1,484 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Tarjeta{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Back Button -->
+    <div>
+        <a href="/cards" class="text-primary hover:text-blue-700 inline-flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Volver a Tarjetas
+        </a>
+    </div>
+
+    <!-- Card Header -->
+    <div id="card-header" class="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg shadow-lg p-6 text-white">
+        <div class="flex justify-between items-start">
+            <div>
+                <h1 id="card-name" class="text-3xl font-bold mb-2">Cargando...</h1>
+                <p id="card-bank" class="text-purple-100"></p>
+            </div>
+            <button onclick="window.location.href='/cards'" class="bg-white text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition">
+                <i class="fas fa-edit mr-2"></i> Editar Tarjeta
+            </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <div>
+                <p class="text-purple-200 text-sm">Saldo Actual</p>
+                <h2 id="card-balance" class="text-2xl font-bold">$0.00</h2>
+            </div>
+            <div>
+                <p class="text-purple-200 text-sm">Límite de Crédito</p>
+                <h2 id="card-limit" class="text-2xl font-bold">$0.00</h2>
+            </div>
+            <div>
+                <p class="text-purple-200 text-sm">Disponible</p>
+                <h2 id="card-available" class="text-2xl font-bold">$0.00</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monthly Payment Summary -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-calculator text-green-500 mr-2"></i> Pago Mensual Total
+            </h2>
+            <p class="text-gray-500 text-sm">Desglose completo de tu pago del mes</p>
+        </div>
+
+        <!-- Desglose de pagos -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <!-- Pago por cuotas MSI -->
+            <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
+                <p class="text-xs text-gray-600 mb-1">Cuotas sin intereses</p>
+                <p id="installments-payment" class="text-2xl font-bold text-blue-600">$0.00</p>
+                <p class="text-xs text-gray-500 mt-1">Meses sin intereses activos</p>
+            </div>
+
+            <!-- Consumos de contado -->
+            <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-500">
+                <p class="text-xs text-gray-600 mb-1">Consumos de contado</p>
+                <p id="regular-consumption" class="text-2xl font-bold text-orange-600">$0.00</p>
+                <p class="text-xs text-gray-500 mt-1">Saldo - Cuotas pendientes</p>
+            </div>
+
+            <!-- Total a pagar -->
+            <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                <p class="text-xs text-gray-600 mb-1">Total a pagar</p>
+                <p id="total-monthly-payment" class="text-3xl font-bold text-green-600">$0.00</p>
+                <p class="text-xs text-gray-500 mt-1">Pago mínimo del mes</p>
+            </div>
+        </div>
+
+        <!-- Explicación del cálculo -->
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <p class="text-xs font-semibold text-gray-700 mb-2">
+                <i class="fas fa-info-circle mr-1"></i> Cálculo:
+            </p>
+            <div class="text-xs text-gray-600 space-y-1">
+                <div class="flex justify-between">
+                    <span>Saldo actual de la tarjeta:</span>
+                    <span id="calc-current-balance" class="font-mono">$0.00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>(-) Total en cuotas pendientes:</span>
+                    <span id="calc-pending-installments" class="font-mono text-red-600">-$0.00</span>
+                </div>
+                <div class="flex justify-between border-t border-gray-300 pt-1">
+                    <span class="font-semibold">= Consumos de contado:</span>
+                    <span id="calc-regular-total" class="font-mono font-semibold">$0.00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>(+) Pago mensual de cuotas:</span>
+                    <span id="calc-installments-payment" class="font-mono text-blue-600">+$0.00</span>
+                </div>
+                <div class="flex justify-between border-t-2 border-gray-400 pt-1 mt-1">
+                    <span class="font-bold text-green-700">= TOTAL A PAGAR:</span>
+                    <span id="calc-total-payment" class="font-mono font-bold text-green-700">$0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Installments Section -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-gray-800">
+                <i class="fas fa-credit-card mr-2 text-blue-500"></i> Compras en Cuotas / MSI
+            </h2>
+            <button onclick="openAddInstallmentModal()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                <i class="fas fa-plus mr-2"></i> Agregar Compra en Cuotas
+            </button>
+        </div>
+
+        <div id="installments-container" class="space-y-4">
+            <!-- Installments will be loaded here -->
+            <div class="text-center py-8">
+                <i class="fas fa-spinner fa-spin text-3xl text-gray-300"></i>
+                <p class="text-gray-500 mt-2">Cargando compras...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Installment Modal -->
+<div id="installment-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Compra en Cuotas</h2>
+        <form id="installment-form" class="space-y-4">
+            <input type="hidden" id="installment-id">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Descripción de la compra *</label>
+                <input type="text" id="installment-description" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Laptop, Refrigerador, Viaje">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Monto total *</label>
+                <input type="number" id="installment-amount" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Número de cuotas sin intereses *</label>
+                <input type="number" id="installment-months" required min="1" max="60" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: 3, 6, 12, 18, 24">
+                <p class="text-xs text-gray-500 mt-1">Ingresa el número de meses sin intereses (1-60)</p>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Cuotas ya pagadas</label>
+                <input type="number" id="installment-paid" min="0" value="0" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Fecha de compra</label>
+                <input type="date" id="installment-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div class="flex space-x-3 pt-4">
+                <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    <i class="fas fa-save mr-2"></i> Guardar
+                </button>
+                <button type="button" onclick="closeInstallmentModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const cardId = '{{ card_id }}';
+    let cardData = null;
+    let installments = [];
+
+    async function loadCardDetails() {
+        try {
+            // Load card data
+            const cardRes = await fetchWithLoader('/api/cards');
+            const cards = await cardRes.json();
+            cardData = cards.find(c => c.id === cardId);
+
+            if (!cardData) {
+                showToast('Tarjeta no encontrada', 'error');
+                window.location.href = '/cards';
+                return;
+            }
+
+            // Update card header
+            document.getElementById('card-name').textContent = cardData.name;
+            document.getElementById('card-bank').textContent = cardData.bank || 'Sin banco';
+            document.getElementById('card-balance').textContent = formatCurrency(cardData.current_balance || 0);
+            document.getElementById('card-limit').textContent = formatCurrency(cardData.credit_limit || 0);
+            const available = (cardData.credit_limit || 0) - (cardData.current_balance || 0);
+            document.getElementById('card-available').textContent = formatCurrency(available);
+
+            // Load installments
+            await loadInstallments();
+
+            // Load monthly payment
+            await loadMonthlyPayment();
+        } catch (error) {
+            console.error('Error loading card details:', error);
+            showToast('Error al cargar los detalles de la tarjeta', 'error');
+        }
+    }
+
+    async function loadInstallments() {
+        try {
+            const res = await fetch(`/api/cards/${cardId}/installments`);
+            installments = await res.json();
+            renderInstallments();
+        } catch (error) {
+            console.error('Error loading installments:', error);
+            showToast('Error al cargar las cuotas', 'error');
+        }
+    }
+
+    async function loadMonthlyPayment() {
+        try {
+            // Obtener pago mensual de cuotas
+            const res = await fetch(`/api/cards/${cardId}/monthly-payment`);
+            const data = await res.json();
+            const installmentsMonthlyPayment = data.monthly_payment || 0;
+
+            // Calcular total pendiente en cuotas (meses restantes × pago mensual)
+            let totalPendingInstallments = 0;
+            installments.forEach(inst => {
+                const remaining = inst.remaining_months || 0;
+                const monthlyPayment = inst.monthly_payment || 0;
+                if (remaining > 0) {
+                    totalPendingInstallments += (remaining * monthlyPayment);
+                }
+            });
+
+            // Obtener saldo actual de la tarjeta
+            const currentBalance = cardData.current_balance || 0;
+
+            // Calcular consumos de contado
+            // Fórmula: Saldo actual - Total que falta pagar en cuotas = Consumos de contado
+            const regularConsumption = Math.max(0, currentBalance - totalPendingInstallments);
+
+            // Calcular total a pagar del mes
+            const totalMonthlyPayment = regularConsumption + installmentsMonthlyPayment;
+
+            // Actualizar UI - Tarjetas superiores
+            document.getElementById('installments-payment').textContent = formatCurrency(installmentsMonthlyPayment);
+            document.getElementById('regular-consumption').textContent = formatCurrency(regularConsumption);
+            document.getElementById('total-monthly-payment').textContent = formatCurrency(totalMonthlyPayment);
+
+            // Actualizar UI - Desglose del cálculo
+            document.getElementById('calc-current-balance').textContent = formatCurrency(currentBalance);
+            document.getElementById('calc-pending-installments').textContent = '-' + formatCurrency(totalPendingInstallments);
+            document.getElementById('calc-regular-total').textContent = formatCurrency(regularConsumption);
+            document.getElementById('calc-installments-payment').textContent = '+' + formatCurrency(installmentsMonthlyPayment);
+            document.getElementById('calc-total-payment').textContent = formatCurrency(totalMonthlyPayment);
+
+        } catch (error) {
+            console.error('Error loading monthly payment:', error);
+        }
+    }
+
+    function renderInstallments() {
+        const container = document.getElementById('installments-container');
+
+        if (installments.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-12">
+                    <i class="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 text-lg">No hay compras en cuotas registradas</p>
+                    <p class="text-gray-400">Agrega tus compras en meses sin intereses para calcular tu pago mensual</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = installments.map(inst => {
+            const remaining = inst.remaining_months || 0;
+            const total = inst.total_months || 1;
+            const paid = inst.paid_months || 0;
+            const progress = (paid / total * 100);
+            const monthlyPayment = inst.monthly_payment || 0;
+            const isActive = remaining > 0;
+
+            return `
+                <div class="border rounded-lg p-4 ${isActive ? 'border-blue-300 bg-blue-50' : 'border-gray-200 bg-gray-50'}">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-800">${inst.description}</h3>
+                            <p class="text-sm text-gray-500">
+                                ${inst.purchase_date ? new Date(inst.purchase_date.seconds ? inst.purchase_date.seconds * 1000 : inst.purchase_date).toLocaleDateString('es-PE') : 'Sin fecha'}
+                            </p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editInstallment('${inst.id}')" class="text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteInstallment('${inst.id}')" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 mb-3">
+                        <div>
+                            <p class="text-xs text-gray-600">Monto Total</p>
+                            <p class="text-lg font-bold text-gray-800">${formatCurrency(inst.total_amount || 0)}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600">Pago Mensual</p>
+                            <p class="text-lg font-bold ${isActive ? 'text-green-600' : 'text-gray-500'}">${formatCurrency(monthlyPayment)}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600">Cuotas Restantes</p>
+                            <p class="text-lg font-bold ${isActive ? 'text-blue-600' : 'text-gray-500'}">${remaining} de ${total}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>Progreso: ${paid} cuotas pagadas</span>
+                            <span>${progress.toFixed(0)}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="h-2 rounded-full ${isActive ? 'bg-blue-600' : 'bg-gray-400'}" style="width: ${Math.min(progress, 100)}%"></div>
+                        </div>
+                    </div>
+
+                    ${isActive ? `
+                        <div class="mt-3 pt-3 border-t border-blue-200">
+                            <button onclick="payInstallment('${inst.id}', ${paid})" class="text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">
+                                <i class="fas fa-check mr-1"></i> Marcar cuota como pagada
+                            </button>
+                        </div>
+                    ` : `
+                        <div class="mt-3 pt-3 border-t border-gray-200">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle mr-1 text-green-500"></i> Compra completamente pagada
+                            </span>
+                        </div>
+                    `}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openAddInstallmentModal() {
+        document.getElementById('modal-title').textContent = 'Agregar Compra en Cuotas';
+        document.getElementById('installment-form').reset();
+        document.getElementById('installment-id').value = '';
+        // Set today's date as default
+        document.getElementById('installment-date').value = new Date().toISOString().split('T')[0];
+        document.getElementById('installment-modal').classList.remove('hidden');
+        document.getElementById('installment-modal').classList.add('flex');
+    }
+
+    function editInstallment(id) {
+        const inst = installments.find(i => i.id === id);
+        if (!inst) return;
+
+        document.getElementById('modal-title').textContent = 'Editar Compra en Cuotas';
+        document.getElementById('installment-id').value = id;
+        document.getElementById('installment-description').value = inst.description;
+        document.getElementById('installment-amount').value = inst.total_amount || 0;
+        document.getElementById('installment-months').value = inst.total_months || '';
+        document.getElementById('installment-paid').value = inst.paid_months || 0;
+
+        if (inst.purchase_date) {
+            const date = new Date(inst.purchase_date.seconds ? inst.purchase_date.seconds * 1000 : inst.purchase_date);
+            document.getElementById('installment-date').value = date.toISOString().split('T')[0];
+        }
+
+        document.getElementById('installment-modal').classList.remove('hidden');
+        document.getElementById('installment-modal').classList.add('flex');
+    }
+
+    function closeInstallmentModal() {
+        document.getElementById('installment-modal').classList.add('hidden');
+        document.getElementById('installment-modal').classList.remove('flex');
+    }
+
+    async function deleteInstallment(id) {
+        if (!confirm('¿Estás seguro de eliminar esta compra en cuotas?')) return;
+
+        try {
+            const res = await fetch(`/api/cards/${cardId}/installments/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (res.ok) {
+                showToast('Compra eliminada exitosamente');
+                await loadInstallments();
+                await loadMonthlyPayment();
+            } else {
+                throw new Error('Error al eliminar');
+            }
+        } catch (error) {
+            console.error('Error deleting installment:', error);
+            showToast('Error al eliminar la compra', 'error');
+        }
+    }
+
+    async function payInstallment(id, currentPaid) {
+        const inst = installments.find(i => i.id === id);
+        if (!inst) return;
+
+        const newPaid = currentPaid + 1;
+
+        if (!confirm(`¿Marcar cuota ${newPaid} de ${inst.total_months} como pagada?`)) return;
+
+        try {
+            const res = await fetch(`/api/cards/${cardId}/installments/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paid_months: newPaid })
+            });
+
+            if (res.ok) {
+                showToast('Cuota marcada como pagada');
+                await loadInstallments();
+                await loadMonthlyPayment();
+            } else {
+                throw new Error('Error al actualizar');
+            }
+        } catch (error) {
+            console.error('Error paying installment:', error);
+            showToast('Error al marcar la cuota', 'error');
+        }
+    }
+
+    document.getElementById('installment-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const installmentId = document.getElementById('installment-id').value;
+        const data = {
+            description: document.getElementById('installment-description').value,
+            total_amount: parseFloat(document.getElementById('installment-amount').value) || 0,
+            total_months: parseInt(document.getElementById('installment-months').value) || 1,
+            paid_months: parseInt(document.getElementById('installment-paid').value) || 0,
+        };
+
+        const dateValue = document.getElementById('installment-date').value;
+        if (dateValue) {
+            data.purchase_date = new Date(dateValue);
+        }
+
+        try {
+            let res;
+            if (installmentId) {
+                // Update existing installment
+                res = await fetch(`/api/cards/${cardId}/installments/${installmentId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } else {
+                // Create new installment
+                res = await fetch(`/api/cards/${cardId}/installments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            }
+
+            if (res.ok) {
+                showToast(installmentId ? 'Compra actualizada exitosamente' : 'Compra registrada exitosamente');
+                closeInstallmentModal();
+                await loadInstallments();
+                await loadMonthlyPayment();
+            } else {
+                throw new Error('Error al guardar');
+            }
+        } catch (error) {
+            console.error('Error saving installment:', error);
+            showToast('Error al guardar la compra', 'error');
+        }
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('installment-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'installment-modal') {
+            closeInstallmentModal();
+        }
+    });
+
+    // Load card details on page load
+    loadCardDetails();
+</script>
+{% endblock %}

@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+
+{% block title %}Préstamos{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-hand-holding-usd text-orange-500"></i> Préstamos
+        </h1>
+        <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
+            <i class="fas fa-plus mr-2"></i> Agregar Préstamo
+        </button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Deuda Total</p>
+            <h2 id="total-debt" class="text-3xl font-bold text-red-600 mt-2">$0.00</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Total Pagado</p>
+            <h2 id="total-paid" class="text-3xl font-bold text-green-600 mt-2">$0.00</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Monto Total</p>
+            <h2 id="total-amount" class="text-3xl font-bold text-gray-800 mt-2">$0.00</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Número de Préstamos</p>
+            <h2 id="loan-count" class="text-3xl font-bold text-blue-600 mt-2">0</h2>
+        </div>
+    </div>
+
+    <!-- Loans List -->
+    <div id="loans-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Loans will be loaded here -->
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div id="loan-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Préstamo</h2>
+        <form id="loan-form" class="space-y-4">
+            <input type="hidden" id="loan-id">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Nombre del préstamo *</label>
+                <input type="text" id="loan-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Préstamo Personal">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Tipo de préstamo</label>
+                <select id="loan-type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option value="personal">Personal</option>
+                    <option value="mortgage">Hipotecario</option>
+                    <option value="auto">Automóvil</option>
+                    <option value="student">Estudiantil</option>
+                    <option value="business">Negocios</option>
+                    <option value="other">Otro</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Entidad financiera</label>
+                <input type="text" id="loan-lender" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Banco o prestamista">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Monto total del préstamo *</label>
+                <input type="number" id="loan-total" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Monto ya pagado</label>
+                <input type="number" id="loan-paid" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00" value="0">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Tasa de interés anual (%)</label>
+                <input type="number" id="loan-interest" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Pago mensual</label>
+                <input type="number" id="loan-payment" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Fecha de inicio</label>
+                <input type="date" id="loan-start-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Fecha de vencimiento</label>
+                <input type="date" id="loan-end-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Moneda</label>
+                <select id="loan-currency" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option value="PEN">PEN - Nuevo Sol Peruano</option>
+                    <option value="USD">USD - Dólar</option>
+                    <option value="EUR">EUR - Euro</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Notas</label>
+                <textarea id="loan-notes" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Notas adicionales (opcional)"></textarea>
+            </div>
+            <div class="flex space-x-3 pt-4">
+                <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    <i class="fas fa-save mr-2"></i> Guardar
+                </button>
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let loans = [];
+
+    async function loadLoans() {
+        try {
+            const res = await fetch('/api/loans');
+            loans = await res.json();
+            renderLoans();
+        } catch (error) {
+            console.error('Error loading loans:', error);
+            showToast('Error al cargar los préstamos', 'error');
+        }
+    }
+
+    function renderLoans() {
+        const container = document.getElementById('loans-container');
+        const totalDebt = loans.reduce((sum, loan) => sum + (loan.remaining_amount || 0), 0);
+        const totalPaid = loans.reduce((sum, loan) => sum + (loan.paid_amount || 0), 0);
+        const totalAmount = loans.reduce((sum, loan) => sum + (loan.total_amount || 0), 0);
+        const loanCount = loans.length;
+
+        document.getElementById('total-debt').textContent = formatCurrency(totalDebt);
+        document.getElementById('total-paid').textContent = formatCurrency(totalPaid);
+        document.getElementById('total-amount').textContent = formatCurrency(totalAmount);
+        document.getElementById('loan-count').textContent = loanCount;
+
+        if (loans.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-hand-holding-usd text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 text-lg">No hay préstamos registrados</p>
+                    <p class="text-gray-400">Agrega tu primer préstamo</p>
+                </div>
+            `;
+            return;
+        }
+
+        const loanTypeIcons = {
+            'personal': 'fa-user',
+            'mortgage': 'fa-home',
+            'auto': 'fa-car',
+            'student': 'fa-graduation-cap',
+            'business': 'fa-briefcase',
+            'other': 'fa-file-invoice-dollar'
+        };
+
+        const loanTypeNames = {
+            'personal': 'Personal',
+            'mortgage': 'Hipotecario',
+            'auto': 'Automóvil',
+            'student': 'Estudiantil',
+            'business': 'Negocios',
+            'other': 'Otro'
+        };
+
+        container.innerHTML = loans.map(loan => {
+            const icon = loanTypeIcons[loan.loan_type] || 'fa-hand-holding-usd';
+            const typeName = loanTypeNames[loan.loan_type] || 'Préstamo';
+            const progress = loan.progress || 0;
+            const remaining = loan.remaining_amount || 0;
+            const isActive = remaining > 0;
+
+            return `
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition ${isActive ? 'border-l-4 border-blue-500' : ''}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800">${loan.name}</h3>
+                            <p class="text-gray-500 text-sm">${loan.lender || 'Sin entidad'}</p>
+                            <p class="text-gray-400 text-xs mt-1">
+                                <i class="fas ${icon} mr-1"></i>${typeName}
+                            </p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editLoan('${loan.id}')" class="text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteLoan('${loan.id}')" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-600">Progreso de pago</span>
+                                <span class="text-green-600 font-semibold">${progress.toFixed(1)}%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="h-3 rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-all" style="width: ${Math.min(progress, 100)}%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 pt-2">
+                            <div>
+                                <p class="text-xs text-gray-500">Pagado</p>
+                                <p class="text-lg font-bold text-green-600">${formatCurrency(loan.paid_amount || 0)}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Restante</p>
+                                <p class="text-lg font-bold text-red-600">${formatCurrency(remaining)}</p>
+                            </div>
+                        </div>
+                        <div class="border-t pt-3">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-gray-600">Total del préstamo</span>
+                                <span class="font-bold text-gray-800">${formatCurrency(loan.total_amount || 0)}</span>
+                            </div>
+                        </div>
+                        ${loan.interest_rate ? `
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-600">
+                                <i class="fas fa-percentage mr-1"></i>Tasa de interés
+                            </span>
+                            <span class="text-orange-600 font-semibold">${loan.interest_rate}% anual</span>
+                        </div>
+                        ` : ''}
+                        ${loan.monthly_payment ? `
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-gray-600">
+                                <i class="fas fa-calendar-alt mr-1"></i>Pago mensual
+                            </span>
+                            <span class="text-blue-600 font-semibold">${formatCurrency(loan.monthly_payment)}</span>
+                        </div>
+                        ` : ''}
+                        ${loan.end_date ? `
+                        <div class="flex justify-between items-center text-xs text-gray-500">
+                            <span>
+                                <i class="fas fa-clock mr-1"></i>Vencimiento
+                            </span>
+                            <span>${new Date(loan.end_date.seconds ? loan.end_date.seconds * 1000 : loan.end_date).toLocaleDateString('es-PE')}</span>
+                        </div>
+                        ` : ''}
+                        ${isActive && loan.monthly_payment ? `
+                        <div class="mt-3 pt-3 border-t border-blue-200">
+                            <button onclick="payMonthlyPayment('${loan.id}', ${loan.paid_amount || 0}, ${loan.monthly_payment})"
+                                    class="w-full text-sm bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600 transition">
+                                <i class="fas fa-check mr-1"></i> Marcar pago mensual (${formatCurrency(loan.monthly_payment)})
+                            </button>
+                        </div>
+                        ` : ''}
+                        ${!isActive ? `
+                        <div class="mt-3 pt-3 border-t border-gray-200">
+                            <span class="text-sm text-gray-500">
+                                <i class="fas fa-check-circle mr-1 text-green-500"></i> Préstamo completamente pagado
+                            </span>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openAddModal() {
+        document.getElementById('modal-title').textContent = 'Agregar Préstamo';
+        document.getElementById('loan-form').reset();
+        document.getElementById('loan-id').value = '';
+        document.getElementById('loan-modal').classList.remove('hidden');
+        document.getElementById('loan-modal').classList.add('flex');
+    }
+
+    function editLoan(id) {
+        const loan = loans.find(l => l.id === id);
+        if (!loan) return;
+
+        document.getElementById('modal-title').textContent = 'Editar Préstamo';
+        document.getElementById('loan-id').value = id;
+        document.getElementById('loan-name').value = loan.name;
+        document.getElementById('loan-type').value = loan.loan_type || 'personal';
+        document.getElementById('loan-lender').value = loan.lender || '';
+        document.getElementById('loan-total').value = loan.total_amount || 0;
+        document.getElementById('loan-paid').value = loan.paid_amount || 0;
+        document.getElementById('loan-interest').value = loan.interest_rate || '';
+        document.getElementById('loan-payment').value = loan.monthly_payment || '';
+        document.getElementById('loan-currency').value = loan.currency || 'PEN';
+        document.getElementById('loan-notes').value = loan.notes || '';
+
+        // Handle dates
+        if (loan.start_date) {
+            const startDate = loan.start_date.seconds ? new Date(loan.start_date.seconds * 1000) : new Date(loan.start_date);
+            document.getElementById('loan-start-date').value = startDate.toISOString().split('T')[0];
+        }
+        if (loan.end_date) {
+            const endDate = loan.end_date.seconds ? new Date(loan.end_date.seconds * 1000) : new Date(loan.end_date);
+            document.getElementById('loan-end-date').value = endDate.toISOString().split('T')[0];
+        }
+
+        document.getElementById('loan-modal').classList.remove('hidden');
+        document.getElementById('loan-modal').classList.add('flex');
+    }
+
+    function closeModal() {
+        document.getElementById('loan-modal').classList.add('hidden');
+        document.getElementById('loan-modal').classList.remove('flex');
+    }
+
+    async function deleteLoan(id) {
+        if (!confirm('¿Estás seguro de eliminar este préstamo?')) return;
+
+        try {
+            const res = await fetch(`/api/loans/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (res.ok) {
+                showToast('Préstamo eliminado exitosamente');
+                loadLoans();
+            } else {
+                throw new Error('Error al eliminar');
+            }
+        } catch (error) {
+            console.error('Error deleting loan:', error);
+            showToast('Error al eliminar el préstamo', 'error');
+        }
+    }
+
+    async function payMonthlyPayment(id, currentPaid, monthlyPayment) {
+        const loan = loans.find(l => l.id === id);
+        if (!loan) return;
+
+        let newPaidAmount = currentPaid + monthlyPayment;
+        const totalAmount = loan.total_amount || 0;
+
+        // Verificar que no se exceda el monto total
+        if (newPaidAmount > totalAmount) {
+            if (!confirm(`El pago excede el monto total del préstamo. ¿Marcar como pagado completamente (${formatCurrency(totalAmount)})?`)) return;
+            // Ajustar al monto total
+            newPaidAmount = totalAmount;
+        } else {
+            if (!confirm(`¿Marcar pago mensual de ${formatCurrency(monthlyPayment)}?\n\nTotal pagado: ${formatCurrency(currentPaid)} → ${formatCurrency(newPaidAmount)}`)) return;
+        }
+
+        try {
+            const res = await fetch(`/api/loans/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paid_amount: Math.min(newPaidAmount, totalAmount) })
+            });
+
+            if (res.ok) {
+                showToast('Pago mensual registrado exitosamente');
+                loadLoans();
+            } else {
+                throw new Error('Error al actualizar');
+            }
+        } catch (error) {
+            console.error('Error paying loan:', error);
+            showToast('Error al registrar el pago', 'error');
+        }
+    }
+
+    document.getElementById('loan-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const loanId = document.getElementById('loan-id').value;
+        const data = {
+            name: document.getElementById('loan-name').value,
+            loan_type: document.getElementById('loan-type').value,
+            lender: document.getElementById('loan-lender').value,
+            total_amount: parseFloat(document.getElementById('loan-total').value) || 0,
+            paid_amount: parseFloat(document.getElementById('loan-paid').value) || 0,
+            interest_rate: parseFloat(document.getElementById('loan-interest').value) || null,
+            monthly_payment: parseFloat(document.getElementById('loan-payment').value) || null,
+            currency: document.getElementById('loan-currency').value,
+            notes: document.getElementById('loan-notes').value
+        };
+
+        // Add dates if provided
+        const startDate = document.getElementById('loan-start-date').value;
+        const endDate = document.getElementById('loan-end-date').value;
+        if (startDate) data.start_date = new Date(startDate);
+        if (endDate) data.end_date = new Date(endDate);
+
+        try {
+            let res;
+            if (loanId) {
+                // Update existing loan
+                res = await fetch(`/api/loans/${loanId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } else {
+                // Create new loan
+                res = await fetch('/api/loans', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            }
+
+            if (res.ok) {
+                showToast(loanId ? 'Préstamo actualizado exitosamente' : 'Préstamo creado exitosamente');
+                closeModal();
+                loadLoans();
+            } else {
+                throw new Error('Error al guardar');
+            }
+        } catch (error) {
+            console.error('Error saving loan:', error);
+            showToast('Error al guardar el préstamo', 'error');
+        }
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('loan-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'loan-modal') {
+            closeModal();
+        }
+    });
+
+    // Load loans on page load
+    loadLoans();
+</script>
+{% endblock %}

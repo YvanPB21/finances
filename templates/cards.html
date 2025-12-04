@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Tarjetas de Crédito{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-credit-card text-purple-500"></i> Tarjetas de Crédito
+        </h1>
+        <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
+            <i class="fas fa-plus mr-2"></i> Agregar Tarjeta
+        </button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Deuda Total</p>
+            <h2 id="total-debt" class="text-3xl font-bold text-red-600 mt-2">S/0.00</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Límite Total</p>
+            <h2 id="total-limit" class="text-3xl font-bold text-gray-800 mt-2">S/0.00</h2>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <p class="text-gray-600 text-sm font-medium">Crédito Disponible</p>
+            <h2 id="available-credit" class="text-3xl font-bold text-green-600 mt-2">S/0.00</h2>
+        </div>
+    </div>
+
+    <!-- Cards List -->
+    <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Cards will be loaded here -->
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div id="card-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Tarjeta</h2>
+        <form id="card-form" class="space-y-4">
+            <input type="hidden" id="card-id">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Nombre de la tarjeta *</label>
+                <input type="text" id="card-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Tarjeta Platinum">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Banco</label>
+                <input type="text" id="card-bank" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Citibanamex">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Límite de crédito *</label>
+                <input type="number" id="card-limit" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Saldo actual usado *</label>
+                <input type="number" id="card-balance" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Día de corte</label>
+                <input type="number" id="card-cutoff" min="1" max="31" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: 15">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Moneda</label>
+                <select id="card-currency" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option value="PEN">PEN - Nuevo Sol Peruano</option>
+                    <option value="USD">USD - Dólar</option>
+                    <option value="EUR">EUR - Euro</option>
+                </select>
+            </div>
+            <div class="flex space-x-3 pt-4">
+                <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    <i class="fas fa-save mr-2"></i> Guardar
+                </button>
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let cards = [];
+
+    async function loadCards() {
+        try {
+            const res = await fetch('/api/cards');
+            cards = await res.json();
+            renderCards();
+        } catch (error) {
+            console.error('Error loading cards:', error);
+            showToast('Error al cargar las tarjetas', 'error');
+        }
+    }
+
+    function renderCards() {
+        const container = document.getElementById('cards-container');
+        const totalDebt = cards.reduce((sum, card) => sum + (card.current_balance || 0), 0);
+        const totalLimit = cards.reduce((sum, card) => sum + (card.credit_limit || 0), 0);
+        const availableCredit = totalLimit - totalDebt;
+
+        document.getElementById('total-debt').textContent = formatCurrency(totalDebt);
+        document.getElementById('total-limit').textContent = formatCurrency(totalLimit);
+        document.getElementById('available-credit').textContent = formatCurrency(availableCredit);
+
+        if (cards.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-credit-card text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 text-lg">No hay tarjetas registradas</p>
+                    <p class="text-gray-400">Agrega tu primera tarjeta de crédito</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = cards.map(card => {
+            const usagePercent = card.credit_limit > 0 ? (card.current_balance / card.credit_limit * 100) : 0;
+            const available = card.credit_limit - card.current_balance;
+            const colorClass = usagePercent > 80 ? 'text-red-600' : usagePercent > 50 ? 'text-yellow-600' : 'text-green-600';
+
+            return `
+                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800">${card.name}</h3>
+                            <p class="text-gray-500 text-sm">${card.bank || 'Sin banco'}</p>
+                            ${card.cutoff_day ? `<p class="text-gray-400 text-xs mt-1"><i class="fas fa-calendar mr-1"></i>Corte: día ${card.cutoff_day}</p>` : ''}
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="window.location.href='/cards/${card.id}'" class="text-green-500 hover:text-green-700" title="Ver Detalle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button onclick="editCard('${card.id}')" class="text-blue-500 hover:text-blue-700" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteCard('${card.id}')" class="text-red-500 hover:text-red-700" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-600">Usado</span>
+                                <span class="${colorClass} font-semibold">${formatCurrency(card.current_balance || 0)}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="h-3 rounded-full transition-all ${usagePercent > 80 ? 'bg-red-500' : usagePercent > 50 ? 'bg-yellow-500' : 'bg-green-500'}" style="width: ${Math.min(usagePercent, 100)}%"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>${usagePercent.toFixed(1)}% usado</span>
+                                <span>Límite: ${formatCurrency(card.credit_limit || 0)}</span>
+                            </div>
+                        </div>
+                        <div class="border-t pt-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Disponible</span>
+                                <span class="text-xl font-bold text-green-600">${formatCurrency(available)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openAddModal() {
+        document.getElementById('modal-title').textContent = 'Agregar Tarjeta';
+        document.getElementById('card-form').reset();
+        document.getElementById('card-id').value = '';
+        document.getElementById('card-modal').classList.remove('hidden');
+        document.getElementById('card-modal').classList.add('flex');
+    }
+
+    function editCard(id) {
+        const card = cards.find(c => c.id === id);
+        if (!card) return;
+
+        document.getElementById('modal-title').textContent = 'Editar Tarjeta';
+        document.getElementById('card-id').value = id;
+        document.getElementById('card-name').value = card.name;
+        document.getElementById('card-bank').value = card.bank || '';
+        document.getElementById('card-limit').value = card.credit_limit || 0;
+        document.getElementById('card-balance').value = card.current_balance || 0;
+        document.getElementById('card-cutoff').value = card.cutoff_day || '';
+        document.getElementById('card-currency').value = card.currency || 'PEN';
+
+        document.getElementById('card-modal').classList.remove('hidden');
+        document.getElementById('card-modal').classList.add('flex');
+    }
+
+    function closeModal() {
+        document.getElementById('card-modal').classList.add('hidden');
+        document.getElementById('card-modal').classList.remove('flex');
+    }
+
+    async function deleteCard(id) {
+        if (!confirm('¿Estás seguro de eliminar esta tarjeta?')) return;
+
+        try {
+            const res = await fetch(`/api/cards/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast('Tarjeta eliminada exitosamente');
+                loadCards();
+            }
+        } catch (error) {
+            console.error('Error deleting card:', error);
+            showToast('Error al eliminar la tarjeta', 'error');
+        }
+    }
+
+    document.getElementById('card-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('card-id').value;
+        const data = {
+            name: document.getElementById('card-name').value,
+            bank: document.getElementById('card-bank').value,
+            credit_limit: parseFloat(document.getElementById('card-limit').value),
+            current_balance: parseFloat(document.getElementById('card-balance').value),
+            cutoff_day: document.getElementById('card-cutoff').value ? parseInt(document.getElementById('card-cutoff').value) : null,
+            currency: document.getElementById('card-currency').value
+        };
+
+        try {
+            let res;
+            if (id) {
+                res = await fetch(`/api/cards/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } else {
+                res = await fetch('/api/cards', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            }
+
+            if (res.ok) {
+                showToast(id ? 'Tarjeta actualizada' : 'Tarjeta creada');
+                closeModal();
+                loadCards();
+            }
+        } catch (error) {
+            console.error('Error saving card:', error);
+            showToast('Error al guardar la tarjeta', 'error');
+        }
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('card-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'card-modal') {
+            closeModal();
+        }
+    });
+
+    // Load cards on page load
+    loadCards();
+</script>
+{% endblock %}

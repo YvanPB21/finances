@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}Efectivo{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-money-bill-wave text-green-500"></i> Efectivo
+        </h1>
+        <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
+            <i class="fas fa-plus mr-2"></i> Agregar Efectivo
+        </button>
+    </div>
+
+    <!-- Total Cash Card -->
+    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
+        <p class="text-green-100 text-sm font-medium">Total en Efectivo</p>
+        <h2 id="total-cash" class="text-4xl font-bold mt-2">$0.00</h2>
+    </div>
+
+    <!-- Cash List -->
+    <div id="cash-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Cash items will be loaded here -->
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div id="cash-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Efectivo</h2>
+        <form id="cash-form" class="space-y-4">
+            <input type="hidden" id="cash-id">
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Descripción *</label>
+                <input type="text" id="cash-description" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Cartera, Efectivo en casa">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Cantidad *</label>
+                <input type="number" id="cash-amount" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Moneda</label>
+                <select id="cash-currency" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <option value="PEN">PEN - Nuevo Sol Peruano</option>
+                    <option value="USD">USD - Dólar</option>
+                    <option value="EUR">EUR - Euro</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-2">Ubicación</label>
+                <input type="text" id="cash-location" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Casa, Oficina">
+            </div>
+            <div class="flex space-x-3 pt-4">
+                <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    <i class="fas fa-save mr-2"></i> Guardar
+                </button>
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let cashItems = [];
+
+    async function loadCash() {
+        try {
+            const res = await fetch('/api/cash');
+            cashItems = await res.json();
+            renderCash();
+        } catch (error) {
+            console.error('Error loading cash:', error);
+            showToast('Error al cargar el efectivo', 'error');
+        }
+    }
+
+    function renderCash() {
+        const container = document.getElementById('cash-container');
+        const totalCash = cashItems.reduce((sum, item) => sum + (item.amount || 0), 0);
+        document.getElementById('total-cash').textContent = formatCurrency(totalCash);
+
+        if (cashItems.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-money-bill-wave text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 text-lg">No hay efectivo registrado</p>
+                    <p class="text-gray-400">Agrega tu primer registro de efectivo</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = cashItems.map(item => `
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-gray-800">${item.description}</h3>
+                        ${item.location ? `<p class="text-gray-500 text-sm"><i class="fas fa-map-marker-alt mr-1"></i>${item.location}</p>` : ''}
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="editCash('${item.id}')" class="text-blue-500 hover:text-blue-700">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteCash('${item.id}')" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="border-t pt-4">
+                    <p class="text-3xl font-bold text-green-600">${formatCurrency(item.amount || 0)}</p>
+                    <p class="text-gray-500 text-sm mt-1">${item.currency || 'PEN'}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function openAddModal() {
+        document.getElementById('modal-title').textContent = 'Agregar Efectivo';
+        document.getElementById('cash-form').reset();
+        document.getElementById('cash-id').value = '';
+        document.getElementById('cash-modal').classList.remove('hidden');
+        document.getElementById('cash-modal').classList.add('flex');
+    }
+
+    function editCash(id) {
+        const item = cashItems.find(c => c.id === id);
+        if (!item) return;
+
+        document.getElementById('modal-title').textContent = 'Editar Efectivo';
+        document.getElementById('cash-id').value = id;
+        document.getElementById('cash-description').value = item.description;
+        document.getElementById('cash-amount').value = item.amount || 0;
+        document.getElementById('cash-currency').value = item.currency || 'PEN';
+        document.getElementById('cash-location').value = item.location || '';
+
+        document.getElementById('cash-modal').classList.remove('hidden');
+        document.getElementById('cash-modal').classList.add('flex');
+    }
+
+    function closeModal() {
+        document.getElementById('cash-modal').classList.add('hidden');
+        document.getElementById('cash-modal').classList.remove('flex');
+    }
+
+    async function deleteCash(id) {
+        if (!confirm('¿Estás seguro de eliminar este registro?')) return;
+
+        try {
+            const res = await fetch(`/api/cash/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                showToast('Efectivo eliminado exitosamente');
+                loadCash();
+            }
+        } catch (error) {
+            console.error('Error deleting cash:', error);
+            showToast('Error al eliminar el efectivo', 'error');
+        }
+    }
+
+    document.getElementById('cash-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('cash-id').value;
+        const data = {
+            description: document.getElementById('cash-description').value,
+            amount: parseFloat(document.getElementById('cash-amount').value),
+            currency: document.getElementById('cash-currency').value,
+            location: document.getElementById('cash-location').value
+        };
+
+        try {
+            let res;
+            if (id) {
+                res = await fetch(`/api/cash/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } else {
+                res = await fetch('/api/cash', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            }
+
+            if (res.ok) {
+                showToast(id ? 'Efectivo actualizado' : 'Efectivo registrado');
+                closeModal();
+                loadCash();
+            }
+        } catch (error) {
+            console.error('Error saving cash:', error);
+            showToast('Error al guardar el efectivo', 'error');
+        }
+    });
+
+    // Load cash on page load
+    loadCash();
+</script>
+{% endblock %}
+
