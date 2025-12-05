@@ -6,7 +6,7 @@
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <h1 class="text-3xl font-bold text-gray-800">
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
             <i class="fas fa-hand-holding-usd text-orange-500"></i> Préstamos
         </h1>
         <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
@@ -16,20 +16,20 @@
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Deuda Total</p>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Deuda Total</p>
             <h2 id="total-debt" class="text-3xl font-bold text-red-600 mt-2">$0.00</h2>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Total Pagado</p>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Total Pagado</p>
             <h2 id="total-paid" class="text-3xl font-bold text-green-600 mt-2">$0.00</h2>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Monto Total</p>
-            <h2 id="total-amount" class="text-3xl font-bold text-gray-800 mt-2">$0.00</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Monto Total</p>
+            <h2 id="total-amount" class="text-3xl font-bold text-gray-800 dark:text-white mt-2">$0.00</h2>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Número de Préstamos</p>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Número de Préstamos</p>
             <h2 id="loan-count" class="text-3xl font-bold text-blue-600 mt-2">0</h2>
         </div>
     </div>
@@ -42,16 +42,16 @@
 
 <!-- Add/Edit Modal -->
 <div id="loan-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Préstamo</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Agregar Préstamo</h2>
         <form id="loan-form" class="space-y-4">
             <input type="hidden" id="loan-id">
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Nombre del préstamo *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Nombre del préstamo *</label>
                 <input type="text" id="loan-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Préstamo Personal">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Tipo de préstamo</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Tipo de préstamo</label>
                 <select id="loan-type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="personal">Personal</option>
                     <option value="mortgage">Hipotecario</option>
@@ -62,35 +62,35 @@
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Entidad financiera</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Entidad financiera</label>
                 <input type="text" id="loan-lender" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Banco o prestamista">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Monto total del préstamo *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Monto total del préstamo *</label>
                 <input type="number" id="loan-total" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Monto ya pagado</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Monto ya pagado</label>
                 <input type="number" id="loan-paid" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00" value="0">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Tasa de interés anual (%)</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Tasa de interés anual (%)</label>
                 <input type="number" id="loan-interest" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Pago mensual</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Pago mensual</label>
                 <input type="number" id="loan-payment" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Fecha de inicio</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Fecha de inicio</label>
                 <input type="date" id="loan-start-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Fecha de vencimiento</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Fecha de vencimiento</label>
                 <input type="date" id="loan-end-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Moneda</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Moneda</label>
                 <select id="loan-currency" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="PEN">PEN - Nuevo Sol Peruano</option>
                     <option value="USD">USD - Dólar</option>
@@ -98,14 +98,14 @@
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Notas</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Notas</label>
                 <textarea id="loan-notes" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Notas adicionales (opcional)"></textarea>
             </div>
             <div class="flex space-x-3 pt-4">
                 <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                     <i class="fas fa-save mr-2"></i> Guardar
                 </button>
-                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
                     Cancelar
                 </button>
             </div>
@@ -178,10 +178,10 @@
             const isActive = remaining > 0;
 
             return `
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition ${isActive ? 'border-l-4 border-blue-500' : ''}">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition ${isActive ? 'border-l-4 border-blue-500' : ''}">
                     <div class="flex justify-between items-start mb-4">
                         <div class="flex-1">
-                            <h3 class="text-xl font-bold text-gray-800">${loan.name}</h3>
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">${loan.name}</h3>
                             <p class="text-gray-500 text-sm">${loan.lender || 'Sin entidad'}</p>
                             <p class="text-gray-400 text-xs mt-1">
                                 <i class="fas ${icon} mr-1"></i>${typeName}
@@ -199,7 +199,7 @@
                     <div class="space-y-3">
                         <div>
                             <div class="flex justify-between text-sm mb-1">
-                                <span class="text-gray-600">Progreso de pago</span>
+                                <span class="text-gray-600 dark:text-gray-300">Progreso de pago</span>
                                 <span class="text-green-600 font-semibold">${progress.toFixed(1)}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-3">
@@ -218,13 +218,13 @@
                         </div>
                         <div class="border-t pt-3">
                             <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-600">Total del préstamo</span>
-                                <span class="font-bold text-gray-800">${formatCurrency(loan.total_amount || 0)}</span>
+                                <span class="text-gray-600 dark:text-gray-300">Total del préstamo</span>
+                                <span class="font-bold text-gray-800 dark:text-white">${formatCurrency(loan.total_amount || 0)}</span>
                             </div>
                         </div>
                         ${loan.interest_rate ? `
                         <div class="flex justify-between items-center text-xs">
-                            <span class="text-gray-600">
+                            <span class="text-gray-600 dark:text-gray-300">
                                 <i class="fas fa-percentage mr-1"></i>Tasa de interés
                             </span>
                             <span class="text-orange-600 font-semibold">${loan.interest_rate}% anual</span>
@@ -232,7 +232,7 @@
                         ` : ''}
                         ${loan.monthly_payment ? `
                         <div class="flex justify-between items-center text-xs">
-                            <span class="text-gray-600">
+                            <span class="text-gray-600 dark:text-gray-300">
                                 <i class="fas fa-calendar-alt mr-1"></i>Pago mensual
                             </span>
                             <span class="text-blue-600 font-semibold">${formatCurrency(loan.monthly_payment)}</span>
@@ -255,7 +255,7 @@
                         </div>
                         ` : ''}
                         ${!isActive ? `
-                        <div class="mt-3 pt-3 border-t border-gray-200">
+                        <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
                             <span class="text-sm text-gray-500">
                                 <i class="fas fa-check-circle mr-1 text-green-500"></i> Préstamo completamente pagado
                             </span>

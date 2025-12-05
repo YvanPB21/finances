@@ -6,7 +6,7 @@
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <h1 class="text-3xl font-bold text-gray-800">
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
             <i class="fas fa-piggy-bank text-blue-500"></i> Cuentas de Ahorro
         </h1>
         <button onclick="openAddModal()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
@@ -16,16 +16,16 @@
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Total Ahorrado</p>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Total Ahorrado</p>
             <h2 id="total-balance" class="text-3xl font-bold text-green-600 mt-2">$0.00</h2>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Número de Cuentas</p>
-            <h2 id="account-count" class="text-3xl font-bold text-gray-800 mt-2">0</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Número de Cuentas</p>
+            <h2 id="account-count" class="text-3xl font-bold text-gray-800 dark:text-white mt-2">0</h2>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <p class="text-gray-600 text-sm font-medium">Promedio por Cuenta</p>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <p class="text-gray-600 dark:text-gray-300 text-sm font-medium">Promedio por Cuenta</p>
             <h2 id="average-balance" class="text-3xl font-bold text-blue-600 mt-2">$0.00</h2>
         </div>
     </div>
@@ -38,24 +38,24 @@
 
 <!-- Add/Edit Modal -->
 <div id="account-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
-        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Agregar Cuenta</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Agregar Cuenta</h2>
         <form id="account-form" class="space-y-4">
             <input type="hidden" id="account-id">
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Nombre de la cuenta *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Nombre de la cuenta *</label>
                 <input type="text" id="account-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Cuenta de Ahorros Principal">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Banco</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Banco</label>
                 <input type="text" id="account-bank" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: BBVA">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Saldo actual *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Saldo actual *</label>
                 <input type="number" id="account-balance" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Tipo de cuenta</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Tipo de cuenta</label>
                 <select id="account-type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="savings">Ahorro</option>
                     <option value="checking">Cheques</option>
@@ -64,11 +64,11 @@
                 </select>
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Tasa de interés anual (%)</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Tasa de interés anual (%)</label>
                 <input type="number" id="account-interest" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Moneda</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Moneda</label>
                 <select id="account-currency" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="PEN">PEN - Nuevo Sol Peruano</option>
                     <option value="USD">USD - Dólar</option>
@@ -79,7 +79,7 @@
                 <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                     <i class="fas fa-save mr-2"></i> Guardar
                 </button>
-                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
                     Cancelar
                 </button>
             </div>
@@ -143,10 +143,10 @@
             const typeName = accountTypeNames[account.account_type] || 'Cuenta';
 
             return `
-                <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition">
                     <div class="flex justify-between items-start mb-4">
                         <div class="flex-1">
-                            <h3 class="text-xl font-bold text-gray-800">${account.name}</h3>
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">${account.name}</h3>
                             <p class="text-gray-500 text-sm">${account.bank || 'Sin banco'}</p>
                             <p class="text-gray-400 text-xs mt-1">
                                 <i class="fas ${icon} mr-1"></i>${typeName}
@@ -164,13 +164,13 @@
                     <div class="space-y-3">
                         <div class="border-t pt-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600 text-sm">Saldo</span>
+                                <span class="text-gray-600 dark:text-gray-300 text-sm">Saldo</span>
                                 <span class="text-2xl font-bold text-green-600">${formatCurrency(account.balance || 0)}</span>
                             </div>
                         </div>
                         ${account.interest_rate ? `
                         <div class="flex justify-between items-center text-sm">
-                            <span class="text-gray-600">
+                            <span class="text-gray-600 dark:text-gray-300">
                                 <i class="fas fa-percentage mr-1"></i>Tasa de interés
                             </span>
                             <span class="text-blue-600 font-semibold">${account.interest_rate}% anual</span>

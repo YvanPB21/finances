@@ -7,10 +7,10 @@
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
                 <i class="fas fa-chart-line text-primary"></i> Dashboard Financiero
             </h1>
-            <p class="text-gray-500 mt-1" id="last-update">Última actualización: Ahora</p>
+            <p class="text-gray-500 dark:text-gray-400 mt-1" id="last-update">Última actualización: Ahora</p>
         </div>
         <button onclick="loadDashboard()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition shadow-lg">
             <i class="fas fa-sync-alt mr-2"></i> Actualizar
@@ -121,8 +121,8 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Income vs Expenses Chart -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-chart-bar text-blue-500 mr-2"></i> Ingresos vs Gastos Mensuales
             </h3>
             <div class="h-64 flex items-end justify-around gap-2 px-4">
@@ -151,8 +151,8 @@
         </div>
 
         <!-- Asset Distribution Pie Chart -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-chart-pie text-green-500 mr-2"></i> Distribución de Activos
             </h3>
             <div class="flex items-center justify-center h-64">
@@ -194,9 +194,9 @@
     <!-- Recent Activity -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Préstamos -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
                     <i class="fas fa-hand-holding-usd text-orange-500 mr-2"></i> Préstamos Activos
                 </h3>
                 <a href="/loans" class="text-primary hover:text-blue-700 text-sm font-medium">
@@ -212,9 +212,9 @@
         </div>
 
         <!-- Tarjetas de Crédito -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
                     <i class="fas fa-credit-card text-purple-500 mr-2"></i> Tarjetas de Crédito
                 </h3>
                 <a href="/cards" class="text-primary hover:text-blue-700 text-sm font-medium">
@@ -230,9 +230,9 @@
         </div>
 
         <!-- Cuentas de Ahorro -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
                     <i class="fas fa-university text-blue-500 mr-2"></i> Cuentas de Ahorro
                 </h3>
                 <a href="/accounts" class="text-primary hover:text-blue-700 text-sm font-medium">
@@ -248,9 +248,9 @@
         </div>
 
         <!-- Metas de Ahorro -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">
                     <i class="fas fa-bullseye text-yellow-500 mr-2"></i> Metas de Ahorro
                 </h3>
                 <a href="/goals" class="text-primary hover:text-blue-700 text-sm font-medium">
@@ -287,39 +287,39 @@
 
     <!-- Quick Actions -->
     <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg shadow p-6">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
             <i class="fas fa-bolt text-yellow-500 mr-2"></i> Acciones Rápidas
         </h3>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
-            <a href="/accounts" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/accounts" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-piggy-bank text-3xl text-blue-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Nueva Cuenta</span>
             </a>
-            <a href="/cards" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/cards" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-credit-card text-3xl text-purple-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Nueva Tarjeta</span>
             </a>
-            <a href="/cash" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/cash" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-money-bill-wave text-3xl text-green-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Registrar Efectivo</span>
             </a>
-            <a href="/loans" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/loans" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-hand-holding-usd text-3xl text-orange-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Nuevo Préstamo</span>
             </a>
-            <a href="/goals" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/goals" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-bullseye text-3xl text-yellow-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Nueva Meta</span>
             </a>
-            <a href="/budget" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/budget" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-calculator text-3xl text-indigo-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Balance Mensual</span>
             </a>
-            <a href="/personal-loans" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <a href="/personal-loans" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-exchange-alt text-3xl text-green-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Ver Todos</span>
             </a>
-            <button onclick="loadDashboard()" class="flex flex-col items-center p-4 bg-white rounded-lg hover:shadow-md transition">
+            <button onclick="loadDashboard()" class="flex flex-col items-center p-4 bg-white dark:bg-gray-800 rounded-lg hover:shadow-md transition">
                 <i class="fas fa-sync-alt text-3xl text-gray-500 mb-2"></i>
                 <span class="text-xs text-center text-gray-700 font-medium">Actualizar</span>
             </button>
@@ -329,7 +329,7 @@
 
 <!-- Modal for Quick Personal Loan -->
 <div id="personal-loan-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
         <h2 class="text-2xl font-bold mb-4 text-gray-800">
             <i class="fas fa-exchange-alt text-green-500 mr-2"></i> Registro Rápido
         </h2>
@@ -374,7 +374,7 @@
                     </button>
                     <button type="button" onclick="selectPaymentMethod('card')"
                             id="btn-card"
-                            class="payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white rounded-lg hover:bg-gray-50 transition">
+                            class="payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 transition">
                         <i class="fas fa-credit-card text-3xl text-purple-600 mb-2"></i>
                         <span class="text-sm font-medium text-gray-700">Tarjeta</span>
                     </button>
@@ -727,9 +727,9 @@
 
         if (selectedPaymentMethod === 'cash') {
             btnCash.className = 'payment-method-btn flex flex-col items-center p-4 border-2 border-green-500 bg-green-50 rounded-lg hover:bg-green-100 transition';
-            btnCard.className = 'payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white rounded-lg hover:bg-gray-50 transition';
+            btnCard.className = 'payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 transition';
         } else {
-            btnCash.className = 'payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white rounded-lg hover:bg-gray-50 transition';
+            btnCash.className = 'payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 transition';
             btnCard.className = 'payment-method-btn flex flex-col items-center p-4 border-2 border-purple-500 bg-purple-50 rounded-lg hover:bg-purple-100 transition';
         }
     }

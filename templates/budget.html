@@ -7,7 +7,7 @@
     <!-- Page Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
                 <i class="fas fa-calculator text-green-500"></i> Balance Mensual
             </h1>
             <p class="text-gray-500 mt-1" id="current-month">Simulación de gastos del mes</p>
@@ -48,30 +48,30 @@
     <!-- Configuration Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Income & Settings -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
                 <i class="fas fa-cog mr-2 text-blue-500"></i> Configuración
             </h2>
 
             <div class="space-y-4">
                 <!-- Salary Input -->
                 <div>
-                    <label class="block text-gray-700 font-medium mb-2">Salario Mensual</label>
+                    <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Salario Mensual</label>
                     <input type="number" id="salary-input" step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
                 </div>
 
                 <!-- Include Options -->
                 <div class="border-t pt-4">
-                    <label class="block text-gray-700 font-medium mb-3">Incluir en simulación:</label>
+                    <label class="block text-gray-700 dark:text-gray-200 font-medium mb-3">Incluir en simulación:</label>
 
                     <div class="flex items-center mb-2">
                         <input type="checkbox" id="include-loans" checked class="w-4 h-4 text-primary rounded focus:ring-primary">
-                        <label for="include-loans" class="ml-2 text-gray-700">Pagos de préstamos activos</label>
+                        <label for="include-loans" class="ml-2 text-gray-700 dark:text-gray-200">Pagos de préstamos activos</label>
                     </div>
 
                     <div class="flex items-center">
                         <input type="checkbox" id="include-cards" checked class="w-4 h-4 text-primary rounded focus:ring-primary">
-                        <label for="include-cards" class="ml-2 text-gray-700">Pagos de tarjetas de crédito</label>
+                        <label for="include-cards" class="ml-2 text-gray-700 dark:text-gray-200">Pagos de tarjetas de crédito</label>
                     </div>
                 </div>
 
@@ -85,9 +85,9 @@
         </div>
 
         <!-- Fixed Expenses -->
-        <div class="bg-white rounded-lg shadow p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-gray-800">
+                <h2 class="text-xl font-bold text-gray-800 dark:text-white">
                     <i class="fas fa-receipt mr-2 text-orange-500"></i> Gastos Fijos
                 </h2>
                 <button onclick="openAddExpenseModal()" class="bg-orange-500 text-white px-3 py-1 rounded-lg hover:bg-orange-600 transition text-sm">
@@ -102,7 +102,7 @@
 
             <div class="border-t mt-4 pt-3">
                 <div class="flex justify-between items-center">
-                    <span class="font-semibold text-gray-700">Total:</span>
+                    <span class="font-semibold text-gray-700 dark:text-gray-200">Total:</span>
                     <span id="fixed-expenses-total" class="text-xl font-bold text-orange-600">$0.00</span>
                 </div>
             </div>
@@ -110,29 +110,29 @@
     </div>
 
     <!-- Expense Breakdown -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">
             <i class="fas fa-chart-pie mr-2 text-purple-500"></i> Desglose de Gastos Mensuales
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- Fixed Expenses Card -->
             <div class="border-l-4 border-orange-500 bg-orange-50 rounded-lg p-4">
-                <p class="text-sm text-gray-600 mb-1">Gastos Fijos</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">Gastos Fijos</p>
                 <p id="breakdown-fixed" class="text-2xl font-bold text-orange-600">$0.00</p>
                 <p class="text-xs text-gray-500 mt-1">Renta, servicios, etc.</p>
             </div>
 
             <!-- Loans Card -->
             <div class="border-l-4 border-blue-500 bg-blue-50 rounded-lg p-4">
-                <p class="text-sm text-gray-600 mb-1">Préstamos</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">Préstamos</p>
                 <p id="breakdown-loans" class="text-2xl font-bold text-blue-600">$0.00</p>
                 <p class="text-xs text-gray-500 mt-1">Pagos mensuales</p>
             </div>
 
             <!-- Credit Cards Card -->
             <div class="border-l-4 border-purple-500 bg-purple-50 rounded-lg p-4">
-                <p class="text-sm text-gray-600 mb-1">Tarjetas de Crédito</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">Tarjetas de Crédito</p>
                 <p id="breakdown-cards" class="text-2xl font-bold text-purple-600">$0.00</p>
                 <p class="text-xs text-gray-500 mt-1">Pagos + cuotas MSI</p>
             </div>
@@ -140,7 +140,7 @@
 
         <!-- Progress Bar -->
         <div class="mt-6">
-            <div class="flex justify-between text-sm text-gray-600 mb-2">
+            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-300 mb-2">
                 <span>Gastos vs Ingresos</span>
                 <span id="expense-percentage">0%</span>
             </div>
@@ -153,22 +153,22 @@
 
 <!-- Add Expense Modal -->
 <div id="expense-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">Agregar Gasto Fijo</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Agregar Gasto Fijo</h2>
         <form id="expense-form" class="space-y-4">
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Concepto *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Concepto *</label>
                 <input type="text" id="expense-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Renta, Internet, Luz">
             </div>
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Monto *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Monto *</label>
                 <input type="number" id="expense-amount" required step="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
             <div class="flex space-x-3 pt-4">
                 <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                     <i class="fas fa-plus mr-2"></i> Agregar
                 </button>
-                <button type="button" onclick="closeExpenseModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <button type="button" onclick="closeExpenseModal()" class="flex-1 bg-gray-300 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
                     Cancelar
                 </button>
             </div>
@@ -219,7 +219,7 @@
         container.innerHTML = expenses.map((exp, index) => `
             <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
                 <div class="flex-1">
-                    <p class="font-medium text-gray-800">${exp.name}</p>
+                    <p class="font-medium text-gray-800 dark:text-white">${exp.name}</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <p class="font-bold text-orange-600">${formatCurrency(exp.amount)}</p>

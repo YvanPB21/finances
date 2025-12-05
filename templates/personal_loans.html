@@ -7,7 +7,7 @@
     <!-- Page Header -->
     <div class="flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
                 <i class="fas fa-exchange-alt text-primary"></i> Préstamos Personales
             </h1>
             <p class="text-gray-500 mt-1">Registra gastos compartidos, menús y taxis</p>
@@ -60,25 +60,30 @@
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-lg shadow p-4">
-        <div class="flex flex-wrap gap-3 items-center">
-            <span class="text-gray-700 font-medium">Filtros:</span>
-            <button onclick="filterLoans('all')" id="filter-all" class="filter-btn px-4 py-2 rounded-lg bg-primary text-white">
-                Todos
-            </button>
-            <button onclick="filterLoans('pending')" id="filter-pending" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">
-                Pendientes
-            </button>
-            <button onclick="filterLoans('paid')" id="filter-paid" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">
-                Pagados
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+        <div class="flex flex-wrap gap-3 items-center justify-between">
+            <div class="flex flex-wrap gap-3 items-center">
+                <span class="text-gray-700 dark:text-gray-200 font-medium">Filtros:</span>
+                <button onclick="filterLoans('all')" id="filter-all" class="filter-btn px-4 py-2 rounded-lg bg-primary text-white">
+                    Todos
+                </button>
+                <button onclick="filterLoans('pending')" id="filter-pending" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-200 hover:bg-gray-300">
+                    Pendientes
+                </button>
+                <button onclick="filterLoans('paid')" id="filter-paid" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-200 hover:bg-gray-300">
+                    Pagados
+                </button>
+            </div>
+            <button onclick="markAllAsPaid()" id="mark-all-btn" class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium shadow-md hidden">
+                <i class="fas fa-check-double mr-2"></i> Marcar todos como pagados
             </button>
         </div>
     </div>
 
     <!-- Loans Table (Compact View) -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h3 class="text-lg font-bold text-gray-800">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                 <i class="fas fa-list text-primary mr-2"></i> Todos los Registros
             </h3>
             <div class="flex gap-2 text-sm">
@@ -92,7 +97,7 @@
         </div>
 
         <!-- Table Header (Desktop) -->
-        <div class="hidden md:grid md:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-sm font-semibold text-gray-700">
+        <div class="hidden md:grid md:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-sm font-semibold text-gray-700 dark:text-gray-200">
             <div class="col-span-1">Tipo</div>
             <div class="col-span-2">Categoría</div>
             <div class="col-span-2">Monto</div>
@@ -122,14 +127,14 @@
 
 <!-- Modal for Add/Edit -->
 <div id="loan-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
-        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800">Registrar Préstamo Personal</h2>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
+        <h2 id="modal-title" class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Registrar Préstamo Personal</h2>
         <form id="loan-form" class="space-y-4">
             <input type="hidden" id="loan-id">
 
             <!-- Tipo -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Tipo *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Tipo *</label>
                 <select id="loan-type" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="lent">🟢 Yván pagó (me deben)</option>
                     <option value="borrowed">🔵 Otro pagó (yo debo)</option>
@@ -138,13 +143,13 @@
 
             <!-- Monto -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Monto *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Monto *</label>
                 <input type="number" id="loan-amount" required step="0.01" min="0.01" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
             </div>
 
             <!-- Categoría -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Categoría *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Categoría *</label>
                 <select id="loan-category" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="menu">🍔 Menú / Comida</option>
                     <option value="taxi">🚕 Taxi / Transporte</option>
@@ -155,7 +160,7 @@
 
             <!-- Método de pago -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Método de pago *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Método de pago *</label>
                 <select id="loan-payment-method" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="cash">💵 Efectivo</option>
                     <option value="card">💳 Tarjeta</option>
@@ -164,13 +169,13 @@
 
             <!-- Descripción -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Descripción (opcional)</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Descripción (opcional)</label>
                 <input type="text" id="loan-description" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Ej: Almuerzo con amigos">
             </div>
 
             <!-- Fecha -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Fecha</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Fecha</label>
                 <input type="date" id="loan-date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
 
@@ -178,7 +183,7 @@
                 <button type="submit" class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                     <i class="fas fa-save mr-2"></i> Guardar
                 </button>
-                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
+                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
                     Cancelar
                 </button>
             </div>
@@ -273,6 +278,16 @@
         document.getElementById('lent-count').textContent = lentCount;
         document.getElementById('borrowed-count').textContent = borrowedCount;
 
+        // Mostrar/ocultar botón "Marcar todos como pagados"
+        const pendingCount = loans.filter(l => l.status === 'pending').length;
+        const markAllBtn = document.getElementById('mark-all-btn');
+        if (pendingCount > 0) {
+            markAllBtn.classList.remove('hidden');
+            markAllBtn.innerHTML = `<i class="fas fa-check-double mr-2"></i> Marcar todos como pagados (${pendingCount})`;
+        } else {
+            markAllBtn.classList.add('hidden');
+        }
+
         // Renderizar tabla
         const tableBody = document.getElementById('loans-table-body');
 
@@ -311,7 +326,7 @@
                 </div>
                 <div class="col-span-2 flex items-center">
                     <span class="text-xl mr-2">${categoryIcons[loan.category] || '📝'}</span>
-                    <span class="text-sm font-medium text-gray-700">${categoryNames[loan.category] || 'Otro'}</span>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">${categoryNames[loan.category] || 'Otro'}</span>
                 </div>
                 <div class="col-span-2 flex items-center">
                     <span class="text-base font-bold ${typeColor}">${formatCurrency(loan.amount || 0)}</span>
@@ -350,7 +365,7 @@
                         <span class="text-2xl">${categoryIcons[loan.category] || '📝'}</span>
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="text-sm font-semibold text-gray-800">${categoryNames[loan.category] || 'Otro'}</span>
+                                <span class="text-sm font-semibold text-gray-800 dark:text-white">${categoryNames[loan.category] || 'Otro'}</span>
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold ${typeBg} ${typeColor}">
                                     ${isLent ? '↑' : '↓'}
                                 </span>
@@ -392,12 +407,67 @@
         // Update filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('bg-primary', 'text-white');
-            btn.classList.add('bg-gray-200', 'text-gray-700');
+            btn.classList.add('bg-gray-200', 'text-gray-700 dark:text-gray-200');
         });
-        document.getElementById(`filter-${filter}`).classList.remove('bg-gray-200', 'text-gray-700');
+        document.getElementById(`filter-${filter}`).classList.remove('bg-gray-200', 'text-gray-700 dark:text-gray-200');
         document.getElementById(`filter-${filter}`).classList.add('bg-primary', 'text-white');
 
         renderLoans();
+    }
+
+    async function markAllAsPaid() {
+        const pendingLoans = loans.filter(l => l.status === 'pending');
+
+        if (pendingLoans.length === 0) {
+            showToast('No hay préstamos pendientes', 'error');
+            return;
+        }
+
+        const totalAmount = pendingLoans.reduce((sum, l) => sum + (l.amount || 0), 0);
+        const message = `¿Marcar ${pendingLoans.length} préstamo${pendingLoans.length > 1 ? 's' : ''} como pagado${pendingLoans.length > 1 ? 's' : ''}?\n\nTotal: ${formatCurrency(totalAmount)}`;
+
+        if (!confirm(message)) return;
+
+        showLoader();
+        let successCount = 0;
+        let errorCount = 0;
+
+        try {
+            // Procesar todos los préstamos pendientes
+            for (const loan of pendingLoans) {
+                try {
+                    const res = await fetch(`/api/personal-loans/${loan.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'paid' })
+                    });
+
+                    if (res.ok) {
+                        successCount++;
+                    } else {
+                        errorCount++;
+                    }
+                } catch (error) {
+                    errorCount++;
+                    console.error(`Error updating loan ${loan.id}:`, error);
+                }
+            }
+
+            hideLoader();
+
+            if (successCount > 0) {
+                showToast(`✅ ${successCount} préstamo${successCount > 1 ? 's' : ''} marcado${successCount > 1 ? 's' : ''} como pagado${successCount > 1 ? 's' : ''}`);
+                await loadLoans();
+            }
+
+            if (errorCount > 0) {
+                showToast(`⚠️ ${errorCount} error${errorCount > 1 ? 'es' : ''} al actualizar`, 'error');
+            }
+        } catch (error) {
+            hideLoader();
+            console.error('Error in markAllAsPaid:', error);
+            showToast('Error al marcar como pagados', 'error');
+        }
     }
 
     function openQuickAddModal() {
