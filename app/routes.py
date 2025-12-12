@@ -47,7 +47,12 @@ def budget():
 @main_bp.route('/personal-loans')
 def personal_loans():
     """Página de préstamos personales"""
-    return render_template('personal_loans.html')
+    return render_template('personal_loans.html', public_view=False)
+
+@main_bp.route('/personal-loans/public')
+def personal_loans_public():
+    """Vista pública para compartir préstamos personales"""
+    return render_template('personal_loans.html', public_view=True, hide_nav=True)
 
 # API Endpoints - Summary
 @main_bp.route('/api/summary')
@@ -385,4 +390,3 @@ def api_delete_personal_loan(loan_id):
         return jsonify({'message': 'Préstamo eliminado'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-

@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Add Dockerfile for containerized application setup">
+    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Update application to run on port 8000 instead of 5000 in documentation and code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/personal_loans.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personal_loans.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +72,9 @@
       <workItem from="1764779799296" duration="20029000" />
       <workItem from="1764824157955" duration="1435000" />
       <workItem from="1764855884063" duration="2213000" />
-      <workItem from="1765385398531" duration="1565000" />
+      <workItem from="1765385398531" duration="1983000" />
+      <workItem from="1765572767870" duration="595000" />
+      <workItem from="1765573614776" duration="1526000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with Flask setup and Firebase configuration">
       <option name="closed" value="true" />
@@ -96,7 +100,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765571950467</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update Dockerfile to run main.py instead of app.py">
+      <option name="closed" value="true" />
+      <created>1765572317852</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765572317852</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Update application to run on port 8000 instead of 5000 in documentation and code">
+      <option name="closed" value="true" />
+      <created>1765572492556</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765572492556</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,7 +126,20 @@
     <MESSAGE value="Add initial project structure with Flask setup and Firebase configuration" />
     <MESSAGE value="Implement dark mode across all HTML pages for improved user experience" />
     <MESSAGE value="Add Dockerfile for containerized application setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Dockerfile for containerized application setup" />
+    <MESSAGE value="Update Dockerfile to run main.py instead of app.py" />
+    <MESSAGE value="Update application to run on port 8000 instead of 5000 in documentation and code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update application to run on port 8000 instead of 5000 in documentation and code" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>9</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
