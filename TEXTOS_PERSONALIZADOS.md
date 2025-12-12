@@ -106,14 +106,14 @@ Toast:
 ## 🧪 VERIFICACIÓN
 
 ### Prueba 1: Dashboard
-1. Abre `http://localhost:5000`
+1. Abre `http://localhost:8000`
 2. Clic en "Registrar Préstamo Personal"
 3. **Verifica:** Select muestra "🟢 Yván pagó (me deben)"
 4. Cambia a la segunda opción
 5. **Verifica:** Muestra "🔵 Otro pagó (yo debo)"
 
 ### Prueba 2: Página de Préstamos
-1. Ve a `http://localhost:5000/personal-loans`
+1. Ve a `http://localhost:8000/personal-loans`
 2. **Verifica:** Títulos muestran "Yván Pagó" y "Otro Pagó"
 3. **Verifica:** Tarjetas dicen "Yván pagó por otros" y "Otros pagaron por Yván"
 4. Abre el modal

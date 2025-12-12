@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Add initial project structure with Flask setup and Firebase configuration">
+    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Add Dockerfile for containerized application setup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accounts.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/budget.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/budget.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/card_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/card_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cards.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cards.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cash.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/goals.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/goals.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loans.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/loans.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/personal_loans.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personal_loans.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +69,8 @@
       <updated>1764779798203</updated>
       <workItem from="1764779799296" duration="20029000" />
       <workItem from="1764824157955" duration="1435000" />
-      <workItem from="1764855884063" duration="2179000" />
+      <workItem from="1764855884063" duration="2213000" />
+      <workItem from="1765385398531" duration="1565000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with Flask setup and Firebase configuration">
       <option name="closed" value="true" />
@@ -88,7 +80,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764807344699</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implement dark mode across all HTML pages for improved user experience">
+      <option name="closed" value="true" />
+      <created>1764965216424</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1764965216424</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add Dockerfile for containerized application setup">
+      <option name="closed" value="true" />
+      <created>1765571950467</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765571950467</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,7 +104,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add initial project structure with Flask setup and Firebase configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add initial project structure with Flask setup and Firebase configuration" />
+    <MESSAGE value="Implement dark mode across all HTML pages for improved user experience" />
+    <MESSAGE value="Add Dockerfile for containerized application setup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Dockerfile for containerized application setup" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

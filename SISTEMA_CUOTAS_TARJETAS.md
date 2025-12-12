@@ -102,7 +102,7 @@ Nueva página completa para gestionar cuotas de una tarjeta.
 
 ### Paso 1: Acceder a la página de tarjetas
 ```
-http://localhost:5000/cards
+http://localhost:8000/cards
 ```
 
 ### Paso 2: Hacer clic en el botón "Ver Detalle" (ícono de ojo verde)
@@ -294,7 +294,7 @@ Total a pagar este mes: $2,500.00
 El sistema está completamente implementado y funcional. Solo necesitas:
 
 1. Iniciar la aplicación: `python main.py`
-2. Ir a: `http://localhost:5000/cards`
+2. Ir a: `http://localhost:8000/cards`
 3. Hacer clic en "Ver Detalle" en cualquier tarjeta
 4. Comenzar a agregar tus compras en cuotas
 

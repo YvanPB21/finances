@@ -61,7 +61,7 @@ Después de la actualización, al ejecutar `python main.py` deberías ver:
 ```
 📦 Usando base de datos: finances
 🚀 Iniciando aplicación de Finanzas Personales...
-📊 Dashboard disponible en: http://localhost:5000
+📊 Dashboard disponible en: http://localhost:8000
 ```
 
 **Sin errores** ✅
@@ -124,7 +124,7 @@ pip show firebase-admin
 ## 🎯 Próximos Pasos
 
 1. **Ejecuta** la aplicación: `python main.py`
-2. **Accede** a: http://localhost:5000
+2. **Accede** a: http://localhost:8000
 3. **Verifica** que el mensaje muestre la BD correcta
 4. **Disfruta** de tu aplicación de finanzas
 

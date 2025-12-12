@@ -222,7 +222,7 @@ python main.py
 
 ### 2. Abre el navegador:
 ```
-http://localhost:5000/personal-loans
+http://localhost:8000/personal-loans
 ```
 
 ### 3. Prueba el botón flotante:

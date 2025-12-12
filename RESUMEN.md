@@ -123,7 +123,7 @@ start.bat
 
 ### Acceso:
 ```
-http://localhost:5000
+http://localhost:8000
 ```
 
 ## 📱 Características de UX/UI

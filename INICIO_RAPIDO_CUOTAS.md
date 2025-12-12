@@ -43,7 +43,7 @@ python main.py
 
 ### Paso 2: Acceder a tus tarjetas
 ```
-Abrir en el navegador: http://localhost:5000/cards
+Abrir en el navegador: http://localhost:8000/cards
 ```
 
 ### Paso 3: Ver detalle de una tarjeta
@@ -247,7 +247,7 @@ TOTAL: $1,250/mes
 python main.py
 
 # Abrir navegador
-http://localhost:5000/cards
+http://localhost:8000/cards
 ```
 
 ### 2. Agregar tarjeta (si no tienes):
@@ -386,7 +386,7 @@ python main.py
 
 ### URL de acceso:
 ```
-http://localhost:5000/cards
+http://localhost:8000/cards
 ```
 
 ### Primer paso:

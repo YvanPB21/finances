@@ -253,7 +253,7 @@ function renderLoanRow(loan) {
 
 ### 1. Abre la página:
 ```
-http://localhost:5000/personal-loans
+http://localhost:8000/personal-loans
 ```
 
 ### 2. Observa el diseño:

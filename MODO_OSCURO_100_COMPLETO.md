@@ -95,7 +95,7 @@ Advertencia:#f59e0b (yellow-500)
 
 2. **Abrir navegador:**
    ```
-   http://localhost:5000
+   http://localhost:8000
    ```
 
 3. **Activar modo oscuro:**

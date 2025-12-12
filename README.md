@@ -75,7 +75,7 @@ Aplicación web para gestionar tu balance financiero centralizado: cuentas de ah
 
 7. **Abrir en el navegador**
    ```
-   http://localhost:5000
+   http://localhost:8000
    ```
 
 ## 📂 Estructura del Proyecto

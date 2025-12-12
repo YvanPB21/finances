@@ -114,7 +114,7 @@ Sesión 2: Usuario vuelve a abrir la app
 ## 🧪 CÓMO PROBAR
 
 ### Prueba 1: Activar Modo Oscuro
-1. Abre: `http://localhost:5000`
+1. Abre: `http://localhost:8000`
 2. **Observa:** Icono de luna 🌙 en el navbar (arriba derecha)
 3. Haz clic en el icono
 4. **Verifica:**
@@ -413,7 +413,7 @@ Texto: Blanco
 ✅ **Profesional** - diseño moderno y elegante  
 
 ### Para probarlo:
-1. Abre `http://localhost:5000`
+1. Abre `http://localhost:8000`
 2. Haz clic en el icono de luna 🌙 (arriba derecha)
 3. ¡Disfruta del modo oscuro! 🌙✨
 

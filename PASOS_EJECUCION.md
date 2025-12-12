@@ -165,7 +165,7 @@ python main.py
 ## 🌐 Paso 5: Acceder a la Aplicación
 
 1. Abre tu navegador web
-2. Ve a: http://localhost:5000
+2. Ve a: http://localhost:8000
 3. Deberías ver el Dashboard de Finanzas
 
 ---
@@ -212,7 +212,7 @@ python main.py
 3. Completa el formulario:
    - Nombre: "Vacaciones 2025"
    - Monto objetivo: 30000
-   - Monto actual: 5000
+   - Monto actual: 8000
    - Fecha: 2025-12-15
 4. Haz clic en "Guardar"
 
@@ -313,7 +313,7 @@ Luego accede a: http://localhost:8000
 3. Busca la IP local (ejemplo: 192.168.1.100)
 4. En tu móvil, abre el navegador y ve a:
    ```
-   http://TU_IP:5000
+   http://TU_IP:8000
    ```
 
 ---

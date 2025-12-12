@@ -9,7 +9,7 @@ Usa esta lista para verificar que todo está funcionando correctamente:
 ## 1️⃣ VERIFICAR MONEDA (S/.)
 
 ### ✅ Pasos:
-1. Abre `http://localhost:5000`
+1. Abre `http://localhost:8000`
 2. Ve a cualquier módulo (Cuentas, Tarjetas, etc.)
 3. Verifica que todos los montos se muestren con **S/.**
 
@@ -24,9 +24,9 @@ NO:    $1,500.00    ❌
 ## 2️⃣ VERIFICAR MÓDULO DE BALANCE MENSUAL
 
 ### ✅ Pasos:
-1. Ve a `http://localhost:5000/budget`
+1. Ve a `http://localhost:8000/budget`
 2. Configura un salario: `15000`
-3. Agrega un gasto fijo: "Renta" - `5000`
+3. Agrega un gasto fijo: "Renta" - `8000`
 4. Guarda la configuración
 
 ### ✅ Expectativa:
@@ -41,7 +41,7 @@ Balance: S/ 10,000.00 (o menos si tienes préstamos/tarjetas)
 ## 3️⃣ VERIFICAR CUOTAS EN TARJETAS
 
 ### ✅ Pasos:
-1. Ve a `http://localhost:5000/cards`
+1. Ve a `http://localhost:8000/cards`
 2. Si no tienes tarjetas, crea una:
    - Nombre: "Visa Platinum"
    - Límite: `20000`
@@ -90,7 +90,7 @@ Progreso: 8.3%
 ## 5️⃣ VERIFICAR PRÉSTAMOS
 
 ### ✅ Pasos:
-1. Ve a `http://localhost:5000/loans`
+1. Ve a `http://localhost:8000/loans`
 2. Si no tienes préstamos, crea uno:
    - Nombre: "Préstamo Personal"
    - Tipo: Personal
@@ -111,10 +111,10 @@ Progreso: 4%
 ## 6️⃣ VERIFICAR INTEGRACIÓN EN BALANCE MENSUAL
 
 ### ✅ Pasos:
-1. Ve a `http://localhost:5000/budget`
+1. Ve a `http://localhost:8000/budget`
 2. Configura:
    - Salario: `15000`
-   - Gasto fijo "Renta": `5000`
+   - Gasto fijo "Renta": `8000`
    - ✅ Incluir préstamos (activado)
    - ✅ Incluir tarjetas (activado)
 3. Guardar configuración

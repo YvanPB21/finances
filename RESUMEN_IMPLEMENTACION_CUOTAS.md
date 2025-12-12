@@ -26,7 +26,7 @@ python main.py
 
 ### 2. Acceder a tarjetas
 ```
-http://localhost:5000/cards
+http://localhost:8000/cards
 ```
 
 ### 3. Ver detalle de una tarjeta
@@ -365,7 +365,7 @@ El sistema de cuotas para tarjetas de crédito está **100% funcional** y listo 
 python main.py
 ```
 
-Luego visita: **http://localhost:5000/cards**
+Luego visita: **http://localhost:8000/cards**
 
 ---
 

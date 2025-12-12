@@ -113,7 +113,7 @@ Cuando inicies la aplicación, verás en la consola qué base de datos se está 
 ```
 🚀 Iniciando aplicación de Finanzas Personales...
 📦 Usando base de datos: mi-base-datos
-📊 Dashboard disponible en: http://localhost:5000
+📊 Dashboard disponible en: http://localhost:8000
 ```
 
 Si no ves el mensaje "📦 Usando base de datos:", significa que estás usando la base de datos por defecto.

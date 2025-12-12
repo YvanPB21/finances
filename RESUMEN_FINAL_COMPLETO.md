@@ -297,7 +297,7 @@ pip install -r requirements.txt
 python main.py
 
 # 4. Abrir navegador
-http://localhost:5000
+http://localhost:8000
 ```
 
 ---

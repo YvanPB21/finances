@@ -322,7 +322,7 @@ Página de Préstamos Personales:
 
 ### 1. Abre el dashboard:
 ```
-http://localhost:5000
+http://localhost:8000
 ```
 
 ### 2. Observa:

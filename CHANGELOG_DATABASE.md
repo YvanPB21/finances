@@ -102,7 +102,7 @@ Cuando inicies la aplicación, verás en la consola:
 ```
 🚀 Iniciando aplicación de Finanzas Personales...
 📦 Usando base de datos: desarrollo
-📊 Dashboard disponible en: http://localhost:5000
+📊 Dashboard disponible en: http://localhost:8000
 ```
 
 Si usas la base de datos por defecto, el mensaje "📦 Usando base de datos:" no aparecerá.

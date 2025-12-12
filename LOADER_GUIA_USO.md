@@ -37,17 +37,17 @@ Cuando se hace una petición, aparece:
 
 ### Prueba 1: Balance Mensual
 
-1. Ve a `http://localhost:5000/budget`
+1. Ve a `http://localhost:8000/budget`
 2. **Observa:** El loader debe aparecer al cargar la página
 3. Configura un salario (ej: 15000)
 4. Clic en "Guardar Configuración"
 5. **Observa:** El loader aparece brevemente mientras guarda
-6. Agrega un gasto fijo (Renta - 5000)
+6. Agrega un gasto fijo (Renta - 8000)
 7. **Observa:** El loader aparece al guardar
 
 ### Prueba 2: Detalle de Tarjeta
 
-1. Ve a `http://localhost:5000/cards`
+1. Ve a `http://localhost:8000/cards`
 2. Clic en el ícono del ojo 👁️ de una tarjeta
 3. **Observa:** El loader aparece al cargar el detalle
 

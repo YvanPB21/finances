@@ -45,7 +45,7 @@ python main.py
 
 ### 2. Ir a detalle de tarjeta
 ```
-http://localhost:5000/cards/<id_de_tarjeta>
+http://localhost:8000/cards/<id_de_tarjeta>
 ```
 
 ### 3. Agregar compra en cuotas

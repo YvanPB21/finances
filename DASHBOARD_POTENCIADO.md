@@ -295,7 +295,7 @@ python main.py
 
 ### 2. Abre el dashboard:
 ```
-http://localhost:5000
+http://localhost:8000
 ```
 
 ### 3. Observa:

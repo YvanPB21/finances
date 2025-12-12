@@ -68,7 +68,7 @@ Al ejecutar `python main.py`, deberías ver:
 ```
 📦 Usando base de datos: finances
 🚀 Iniciando aplicación de Finanzas Personales...
-📊 Dashboard disponible en: http://localhost:5000
+📊 Dashboard disponible en: http://localhost:8000
 ```
 
 **Si ves errores:**

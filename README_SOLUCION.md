@@ -74,7 +74,7 @@ python main.py
 ```
 📦 Usando base de datos: finances
 🚀 Iniciando aplicación de Finanzas Personales...
-📊 Dashboard disponible en: http://localhost:5000
+📊 Dashboard disponible en: http://localhost:8000
 ⚠️  Recuerda configurar tus credenciales de Firebase en .env
  * Serving Flask app 'app'
  * Debug mode: on
@@ -92,7 +92,7 @@ Si ves el mensaje "📦 Usando base de datos: finances" **sin errores**, ¡la ac
 ### Acceder a la aplicación
 
 1. Abre tu navegador
-2. Ve a: http://localhost:5000
+2. Ve a: http://localhost:8000
 3. Deberías ver el Dashboard de Finanzas
 
 ---
@@ -176,7 +176,7 @@ Tu aplicación de finanzas personales está completamente funcional y actualizad
 
 **Próximos pasos:**
 1. ✅ Ejecuta `python main.py`
-2. ✅ Abre http://localhost:5000
+2. ✅ Abre http://localhost:8000
 3. ✅ Comienza a gestionar tus finanzas
 
 ---

@@ -86,7 +86,7 @@ python main.py
 
 Una vez iniciada, abre tu navegador en:
 ```
-http://localhost:5000
+http://localhost:8000
 ```
 
 ### Detener la Aplicación
@@ -150,8 +150,8 @@ Metas (/goals)          → Definir y seguir metas de ahorro
 - Revisa la consola del navegador (F12) para errores
 - Verifica que Firebase esté configurado correctamente
 
-### Puerto 5000 ya en uso
-- Detén otras aplicaciones en el puerto 5000
+### Puerto 8000 ya en uso
+- Detén otras aplicaciones en el puerto 8000
 - O edita `main.py` para usar otro puerto:
   ```python
   app.run(debug=True, host='0.0.0.0', port=8000)
@@ -172,7 +172,7 @@ Si quieres acceder desde tu teléfono en la misma red:
 
 2. En tu móvil, abre:
    ```
-   http://TU_IP_LOCAL:5000
+   http://TU_IP_LOCAL:8000
    ```
 
 ### 💾 Respaldo de Datos

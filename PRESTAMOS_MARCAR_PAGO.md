@@ -269,7 +269,7 @@ Clic en "Marcar pago mensual ($500)"
 
 1. **Probar la funcionalidad:**
    ```
-   - Ir a http://localhost:5000/loans
+   - Ir a http://localhost:8000/loans
    - Crear préstamo con pago mensual
    - Probar botón "Marcar pago mensual"
    ```
