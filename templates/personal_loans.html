@@ -123,7 +123,7 @@
         </div>
 
         <!-- Table Header (Desktop) -->
-        <div class="hidden md:grid md:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-sm font-semibold text-gray-700 dark:text-gray-200">
+        <div class="hidden md:grid md:grid-cols-12 gap-3 px-4 py-2 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-700 dark:text-gray-200">
             <div class="col-span-1">Tipo</div>
             <div class="col-span-2">Categoría</div>
             <div class="col-span-2">Monto</div>
@@ -384,21 +384,21 @@
 
          // Versión Desktop (tabla)
          const desktopRow = `
-             <div class="hidden md:grid md:grid-cols-12 gap-4 px-6 py-3 hover:bg-gray-50 transition border-l-4 ${typeBorder}">
+             <div class="hidden md:grid md:grid-cols-12 gap-3 px-4 py-2 hover:bg-gray-50 transition border-l-4 ${typeBorder}">
                  <div class="col-span-1 flex items-center">
-                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${typeBg} ${typeColor}">
+                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${typeBg} ${typeColor}">
                          ${isLent ? '<i class="fas fa-arrow-up mr-1"></i>Pagué' : '<i class="fas fa-arrow-down mr-1"></i>Otro'}
                      </span>
                  </div>
-                 <div class="col-span-2 flex items-center">
-                     <span class="text-xl mr-2">${categoryIcons[loan.category] || '📝'}</span>
+                 <div class="col-span-2 flex items-center gap-2">
+                     <span class="text-lg">${categoryIcons[loan.category] || '📝'}</span>
                      <span class="text-sm font-medium text-gray-700 dark:text-gray-200">${categoryNames[loan.category] || 'Otro'}</span>
                  </div>
                  <div class="col-span-2 flex items-center">
-                     <span class="text-base font-bold ${typeColor}">${formatCurrency(loan.amount || 0)}</span>
+                     <span class="text-sm font-bold ${typeColor}">${formatCurrency(loan.amount || 0)}</span>
                  </div>
-                 <div class="col-span-2 flex items-center">
-                     <span class="text-lg mr-1">${paymentIcons[loan.payment_method] || '💵'}</span>
+                 <div class="col-span-2 flex items-center gap-1">
+                     <span class="text-base">${paymentIcons[loan.payment_method] || '💵'}</span>
                      <span class="text-xs text-gray-600">${loan.payment_method === 'cash' ? 'Efectivo' : 'Tarjeta'}</span>
                  </div>
                  <div class="col-span-3 flex items-center">
@@ -407,7 +407,7 @@
                  <div class="col-span-1 flex items-center text-xs text-gray-500">
                      ${dateStr}
                  </div>
-                 <div class="col-span-1 text-center">
+                 <div class="col-span-1 flex items-center justify-center gap-1">
                     ${publicView ? `<span class="text-xs font-semibold ${isPending ? 'text-amber-600' : 'text-emerald-600'}">${isPending ? 'Pendiente' : 'Pagado'}</span>` : actionButtons}
                  </div>
              </div>
@@ -415,12 +415,12 @@
 
          // Versión Mobile (tarjeta compacta)
          const mobileCard = `
-             <div class="md:hidden px-4 py-3 border-l-4 ${typeBorder} hover:bg-gray-50">
-                 <div class="flex justify-between items-start mb-2">
+             <div class="md:hidden px-3 py-2 border-l-4 ${typeBorder} hover:bg-gray-50">
+                 <div class="flex justify-between items-start mb-1.5">
                      <div class="flex items-center gap-2">
-                         <span class="text-2xl">${categoryIcons[loan.category] || '📝'}</span>
+                         <span class="text-xl">${categoryIcons[loan.category] || '📝'}</span>
                          <div>
-                             <div class="flex items-center gap-2 mb-1">
+                             <div class="flex items-center gap-2 mb-0.5">
                                  <span class="text-sm font-semibold text-gray-800 dark:text-white">${categoryNames[loan.category] || 'Otro'}</span>
                                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold ${typeBg} ${typeColor}">
                                      ${isLent ? '↑' : '↓'}
@@ -431,26 +431,26 @@
                              </div>
                          </div>
                      </div>
-                     <span class="text-lg font-bold ${typeColor}">${formatCurrency(loan.amount || 0)}</span>
+                     <span class="text-base font-bold ${typeColor}">${formatCurrency(loan.amount || 0)}</span>
                  </div>
-                 ${loan.description ? `<p class="text-xs text-gray-600 mb-2">${loan.description}</p>` : ''}
+                 ${loan.description ? `<p class="text-xs text-gray-600 mb-1.5">${loan.description}</p>` : ''}
                  <div class="flex justify-between items-center gap-2">
                      ${publicView ? `
                          <span class="text-[11px] font-semibold ${isPending ? 'text-amber-600' : 'text-emerald-600'}">${isPending ? 'Pendiente' : 'Pagado'}</span>
                      ` : `
                          <div class="flex gap-1">
                              ${isPending ? `
-                                 <button onclick="markAsPaid('${loan.id}')" class="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition">
+                                 <button onclick="markAsPaid('${loan.id}')" class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition">
                                      <i class="fas fa-check"></i> Pagar
                                  </button>
                              ` : `<span class="text-xs text-green-600 font-medium"><i class="fas fa-check-circle mr-1"></i>Pagado</span>`}
                          </div>
                          <div class="flex gap-1">
-                             <button onclick="editLoan('${loan.id}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded transition">
-                                 <i class="fas fa-edit"></i>
+                             <button onclick="editLoan('${loan.id}')" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition">
+                                 <i class="fas fa-edit text-sm"></i>
                              </button>
-                             <button onclick="deleteLoan('${loan.id}')" class="p-2 text-red-600 hover:bg-red-50 rounded transition">
-                                 <i class="fas fa-trash"></i>
+                             <button onclick="deleteLoan('${loan.id}')" class="p-1.5 text-red-600 hover:bg-red-50 rounded transition">
+                                 <i class="fas fa-trash text-sm"></i>
                              </button>
                          </div>
                      `}
