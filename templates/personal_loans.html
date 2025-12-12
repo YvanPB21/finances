@@ -364,8 +364,23 @@
          const typeBg = isLent ? 'bg-green-50' : 'bg-red-50';
          const typeBorder = isLent ? 'border-l-green-500' : 'border-l-red-500';
 
-         const dateStr = loan.date ? new Date(loan.date).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' }) :
-                        (loan.created_at?.seconds ? new Date(loan.created_at.seconds * 1000).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' }) : '--');
+         // Manejar fechas correctamente sin conversión de zona horaria
+         let dateStr = '--';
+         if (loan.date) {
+             // Si es string de fecha (YYYY-MM-DD), extraer día y mes directamente
+             if (typeof loan.date === 'string' && loan.date.includes('-')) {
+                 const [year, month, day] = loan.date.split('-');
+                 dateStr = `${day}/${month}`;
+             } else {
+                 // Si es timestamp u otro formato
+                 const date = new Date(loan.date);
+                 date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+                 dateStr = date.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
+             }
+         } else if (loan.created_at?.seconds) {
+             const date = new Date(loan.created_at.seconds * 1000);
+             dateStr = date.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
+         }
 
          // Botones de acción para la vista privada
          const actionButtons = `
