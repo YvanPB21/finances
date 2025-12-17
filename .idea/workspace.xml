@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Update application to run on port 8000 instead of 5000 in documentation and code">
+    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Fix date handling in personal loans view to support multiple formats and time zone adjustments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/personal_loans.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personal_loans.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +72,9 @@
       <workItem from="1764855884063" duration="2213000" />
       <workItem from="1765385398531" duration="1983000" />
       <workItem from="1765572767870" duration="595000" />
-      <workItem from="1765573614776" duration="1526000" />
+      <workItem from="1765573614776" duration="3483000" />
+      <workItem from="1766007944902" duration="315000" />
+      <workItem from="1766008297161" duration="407000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with Flask setup and Firebase configuration">
       <option name="closed" value="true" />
@@ -116,7 +116,31 @@
       <option name="project" value="LOCAL" />
       <updated>1765572492556</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add public view for personal loans and update navigation visibility">
+      <option name="closed" value="true" />
+      <created>1765575472365</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765575472365</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Refactor personal loans HTML for improved layout and styling consistency">
+      <option name="closed" value="true" />
+      <created>1765575754949</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1765575754949</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix date handling in personal loans view to support multiple formats and time zone adjustments">
+      <option name="closed" value="true" />
+      <created>1765577060916</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765577060916</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,7 +152,10 @@
     <MESSAGE value="Add Dockerfile for containerized application setup" />
     <MESSAGE value="Update Dockerfile to run main.py instead of app.py" />
     <MESSAGE value="Update application to run on port 8000 instead of 5000 in documentation and code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update application to run on port 8000 instead of 5000 in documentation and code" />
+    <MESSAGE value="Add public view for personal loans and update navigation visibility" />
+    <MESSAGE value="Refactor personal loans HTML for improved layout and styling consistency" />
+    <MESSAGE value="Fix date handling in personal loans view to support multiple formats and time zone adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix date handling in personal loans view to support multiple formats and time zone adjustments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

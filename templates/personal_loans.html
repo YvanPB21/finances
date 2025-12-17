@@ -88,13 +88,13 @@
         <div class="flex flex-wrap gap-3 items-center justify-between">
             <div class="flex flex-wrap gap-3 items-center">
                 <span class="text-gray-700 dark:text-gray-200 font-medium">Filtros:</span>
-                <button onclick="filterLoans('all')" id="filter-all" class="filter-btn px-4 py-2 rounded-lg bg-primary text-white">
+                <button onclick="filterLoans('all')" id="filter-all" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
                     Todos
                 </button>
-                <button onclick="filterLoans('pending')" id="filter-pending" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-200 hover:bg-gray-300">
+                <button onclick="filterLoans('pending')" id="filter-pending" class="filter-btn px-4 py-2 rounded-lg bg-primary text-white">
                     Pendientes
                 </button>
-                <button onclick="filterLoans('paid')" id="filter-paid" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 dark:text-gray-200 hover:bg-gray-300">
+                <button onclick="filterLoans('paid')" id="filter-paid" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition">
                     Pagados
                 </button>
             </div>
@@ -231,7 +231,7 @@
 <script>
     const publicView = {{ 'true' if public_view else 'false' }};
      let loans = [];
-     let currentFilter = 'all';
+     let currentFilter = 'pending';
 
      const categoryIcons = {
          'menu': '🍔',
@@ -482,10 +482,11 @@
          // Update filter buttons
          document.querySelectorAll('.filter-btn').forEach(btn => {
              btn.classList.remove('bg-primary', 'text-white');
-             btn.classList.add('bg-gray-200', 'text-gray-700 dark:text-gray-200');
+             btn.classList.add('bg-gray-200', 'text-gray-700');
          });
-         document.getElementById(`filter-${filter}`).classList.remove('bg-gray-200', 'text-gray-700 dark:text-gray-200');
-         document.getElementById(`filter-${filter}`).classList.add('bg-primary', 'text-white');
+         const activeBtn = document.getElementById(`filter-${filter}`);
+         activeBtn.classList.remove('bg-gray-200', 'text-gray-700');
+         activeBtn.classList.add('bg-primary', 'text-white');
 
          renderLoans();
      }
