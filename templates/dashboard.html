@@ -330,31 +330,31 @@
 <!-- Modal for Quick Personal Loan -->
 <div id="personal-loan-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 m-4 max-w-md w-full">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
             <i class="fas fa-exchange-alt text-green-500 mr-2"></i> Registro Rápido
         </h2>
         <form id="personal-loan-form" class="space-y-4">
             <!-- Tipo -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">¿Quién pagó? *</label>
-                <select id="pl-type" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                    <option value="lent">🟢 Yván pagó (me deben)</option>
-                    <option value="borrowed">🔵 Otro pagó (yo debo)</option>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">¿Quién pagó? *</label>
+                <select id="pl-type" required class="w-full px-4 py-2 border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="lent">🟢 Yo pagué (me deben)</option>
+                    <option value="borrowed">🔵 Pagaron por mí (yo debo)</option>
                 </select>
             </div>
 
             <!-- Monto -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Monto *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Monto *</label>
                 <input type="number" id="pl-amount" required step="0.01" min="0.01"
-                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                       class="w-full px-4 py-2 border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                        placeholder="0.00" autofocus>
             </div>
 
             <!-- Categoría -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">¿Para qué? *</label>
-                <select id="pl-category" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">¿Para qué? *</label>
+                <select id="pl-category" required class="w-full px-4 py-2 border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="menu">🍔 Menú / Comida</option>
                     <option value="taxi">🚕 Taxi / Transporte</option>
                     <option value="shared">👥 Gasto Compartido</option>
@@ -364,19 +364,19 @@
 
             <!-- Método de pago -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">¿Cómo pagaste? *</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">¿Cómo pagaste? *</label>
                 <div class="grid grid-cols-2 gap-3">
                     <button type="button" onclick="selectPaymentMethod('cash')"
                             id="btn-cash"
-                            class="payment-method-btn flex flex-col items-center p-4 border-2 border-green-500 bg-green-50 rounded-lg hover:bg-green-100 transition">
-                        <i class="fas fa-money-bill-wave text-3xl text-green-600 mb-2"></i>
-                        <span class="text-sm font-medium text-gray-700">Efectivo</span>
+                            class="payment-method-btn flex flex-col items-center p-4 border-2 border-green-500 bg-green-50 dark:bg-green-900/30 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition">
+                        <i class="fas fa-money-bill-wave text-3xl text-green-600 dark:text-green-400 mb-2"></i>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Efectivo</span>
                     </button>
                     <button type="button" onclick="selectPaymentMethod('card')"
                             id="btn-card"
-                            class="payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 transition">
-                        <i class="fas fa-credit-card text-3xl text-purple-600 mb-2"></i>
-                        <span class="text-sm font-medium text-gray-700">Tarjeta</span>
+                            class="payment-method-btn flex flex-col items-center p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                        <i class="fas fa-credit-card text-3xl text-purple-600 dark:text-purple-400 mb-2"></i>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Tarjeta</span>
                     </button>
                 </div>
                 <input type="hidden" id="pl-payment-method" value="cash" required>
@@ -384,9 +384,9 @@
 
             <!-- Descripción (opcional) -->
             <div>
-                <label class="block text-gray-700 font-medium mb-2">Descripción (opcional)</label>
+                <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Descripción (opcional)</label>
                 <input type="text" id="pl-description"
-                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                       class="w-full px-4 py-2 border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                        placeholder="Ej: Almuerzo con amigos">
             </div>
 
@@ -394,7 +394,7 @@
                 <button type="submit" class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition font-bold">
                     <i class="fas fa-check mr-2"></i> Guardar
                 </button>
-                <button type="button" onclick="closePersonalLoanModal()" class="flex-1 bg-gray-300 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-400 transition font-bold">
+                <button type="button" onclick="closePersonalLoanModal()" class="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-3 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition font-bold">
                     Cancelar
                 </button>
             </div>

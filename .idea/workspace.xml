@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Fix date handling in personal loans view to support multiple formats and time zone adjustments">
+    <list default="true" id="6f5cb7c8-6420-40fa-a392-d00add577a70" name="Changes" comment="Update personal loans terminology for clarity and consistency">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/personal_loans.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personal_loans.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VISTA_COMPACTA_IMPLEMENTADA.md" beforeDir="false" afterPath="$PROJECT_DIR$/VISTA_COMPACTA_IMPLEMENTADA.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/card_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/card_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +57,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.26830.99" />
         <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
       </set>
     </attachedChunks>
@@ -74,7 +75,8 @@
       <workItem from="1765572767870" duration="595000" />
       <workItem from="1765573614776" duration="3483000" />
       <workItem from="1766007944902" duration="315000" />
-      <workItem from="1766008297161" duration="407000" />
+      <workItem from="1766008297161" duration="859000" />
+      <workItem from="1767655696920" duration="5000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project structure with Flask setup and Firebase configuration">
       <option name="closed" value="true" />
@@ -140,7 +142,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765577060916</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Update default loan filter to 'pending' and improve button styles for better UX">
+      <option name="closed" value="true" />
+      <created>1766008823910</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766008823910</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Update personal loans terminology for clarity and consistency">
+      <option name="closed" value="true" />
+      <created>1767655994631</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1767655994631</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,7 +173,9 @@
     <MESSAGE value="Add public view for personal loans and update navigation visibility" />
     <MESSAGE value="Refactor personal loans HTML for improved layout and styling consistency" />
     <MESSAGE value="Fix date handling in personal loans view to support multiple formats and time zone adjustments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix date handling in personal loans view to support multiple formats and time zone adjustments" />
+    <MESSAGE value="Update default loan filter to 'pending' and improve button styles for better UX" />
+    <MESSAGE value="Update personal loans terminology for clarity and consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update personal loans terminology for clarity and consistency" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
