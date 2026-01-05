@@ -40,7 +40,7 @@
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Me deben (Yván pagó) -->
+        <!-- Me deben -->
         <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
             <div class="flex justify-between items-start">
                 <div>
@@ -51,10 +51,10 @@
                     <i class="fas fa-arrow-left text-2xl"></i>
                 </div>
             </div>
-            <p class="text-green-100 text-xs mt-4">Yván pagó por otros</p>
+            <p class="text-green-100 text-xs mt-4">Gastos que yo cubrí</p>
         </div>
 
-        <!-- Yo debo (Pagaron por Yván) -->
+        <!-- Yo debo -->
         <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-lg shadow-lg p-6 text-white">
             <div class="flex justify-between items-start">
                 <div>
@@ -65,7 +65,7 @@
                     <i class="fas fa-arrow-right text-2xl"></i>
                 </div>
             </div>
-            <p class="text-red-100 text-xs mt-4">Pagaron por Yván</p>
+            <p class="text-red-100 text-xs mt-4">Gastos que cubrieron por mí</p>
         </div>
 
         <!-- Balance -->
@@ -171,8 +171,8 @@
             <div>
                 <label class="block text-gray-700 dark:text-gray-200 font-medium mb-2">Tipo *</label>
                 <select id="loan-type" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option value="lent">🟢 Yván pagó (me deben)</option>
-                    <option value="borrowed">🔵 Otro pagó (yo debo)</option>
+                    <option value="lent">🟢 Yo pagué (me deben)</option>
+                    <option value="borrowed">🔵 Pagaron por mí (yo debo)</option>
                 </select>
             </div>
 
@@ -402,7 +402,7 @@
              <div class="hidden md:grid md:grid-cols-12 gap-3 px-4 py-2 hover:bg-gray-50 transition border-l-4 ${typeBorder}">
                  <div class="col-span-1 flex items-center">
                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${typeBg} ${typeColor}">
-                         ${isLent ? '<i class="fas fa-arrow-up mr-1"></i>Pagué' : '<i class="fas fa-arrow-down mr-1"></i>Otro'}
+                         ${isLent ? '<i class="fas fa-arrow-up mr-1"></i>Yo pagué' : '<i class="fas fa-arrow-down mr-1"></i>Me pagaron'}
                      </span>
                  </div>
                  <div class="col-span-2 flex items-center gap-2">
